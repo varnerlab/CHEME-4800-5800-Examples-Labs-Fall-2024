@@ -1,0 +1,12 @@
+[options]
+ssl_mode = "require"
+ssl = true
+
+[connection]
+connection_timeout = 30
+host = "localhost"
+password = "mypassword"
+port = 5432
+database = "mydatabase"
+max_connections = 10
+user = "myuser"

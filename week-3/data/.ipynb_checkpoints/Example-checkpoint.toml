@@ -1,0 +1,16 @@
+# This is a TOML configuration file for a database
+
+# section: holds connection information
+[connection]
+host = "localhost"      # The database hostname
+port = 5432             # The port to connect to the database on
+database = "mydatabase" # The name of the database
+user = "myuser"         # The username to connect to the database with
+password = "mypassword" # The password for the user
+max_connections = 10    # The maximum number of connections to allow at once
+connection_timeout = 30 # The amount of time to wait before timing out a connection
+
+# section: holds a group of database options
+[options]
+ssl = true              # Whether to enable SSL connections to the database
+ssl_mode = "require"    # The preferred SSL mode to use

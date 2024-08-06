@@ -1,0 +1,15 @@
+# This is a YAML configuration file for an application
+
+# Meta data about MyApp
+name: MyApp             # The application's name
+version: 1.0.0          # The version of the application
+host: localhost         # The hostname to bind the application to
+port: 8080              # The port to bind the application to
+
+# A group of database options
+database:
+  host: localhost       # The database hostname
+  port: 5432            # The port to connect to the database on
+  name: mydatabase      # The name of the database
+  user: myuser          # The username to connect to the database with
+  password: mypassword  # The password for the user
