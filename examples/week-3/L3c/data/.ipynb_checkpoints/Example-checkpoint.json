@@ -1,0 +1,14 @@
+{
+    "people": [
+      {
+        "name": "John Smith",
+        "email": "john@example.com",
+        "phone": "555-555-5555"
+      },
+      {
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "444-444-4444"
+      }
+    ]
+  }
