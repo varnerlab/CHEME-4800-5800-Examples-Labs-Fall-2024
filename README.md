@@ -14,7 +14,9 @@ In addition, we use other tools and languages, such as [Python via the Anaconda 
 ### Julia
 `Julia` is a high-level, general-purpose dynamic programming language for numerical analysis and computational science. To download and install the latest version of [Julia](https://julialang.org/downloads/), follow the [instructions here](https://julialang.org/downloads/) for your respective platform.
 * For Windows users: Select the `add to path` option during installation to add `Julia` to your search path. You'll need this so that we can start [Julia](https://julialang.org/downloads/) from the terminal in [VSCode](https://code.visualstudio.com/download).
-* For macOS users: follow the instructions on the [Julia website for updating the macOS path from the terminal](https://julialang.org/downloads/platform/#optional_add_julia_to_path). Alternatively, you can manually update your `.zshrc` file in your home directory to include the path entry (edit using Nano or some other text editor): 
+* For macOS users: follow the instructions on the [Julia website for updating the macOS path from the terminal](https://julialang.org/downloads/platform/#optional_add_julia_to_path).
+
+Alternatively, macOS users can manually update your `.zshrc` file in your home directory to include the path entry (edit using Nano or some other text editor): 
 ```zsh
 export PATH=“$PATH:/Applications/Julia-1.10.app/Contents/Resources/Julia/bin”
 ```
