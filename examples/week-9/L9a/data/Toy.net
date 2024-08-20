@@ -1,0 +1,5 @@
+// main reactions
+// Record: name, reactants, products, is_reversible
+v1,A1+x,B+y,false
+v2,B,P,false
+v3,A2+y,C+x,false

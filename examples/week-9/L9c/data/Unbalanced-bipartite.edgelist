@@ -1,0 +1,31 @@
+# Edge file for Bipartite Graph
+# Record: source, target, cost, lb capacity, ub capacity
+
+# edges start node: 1 (source node) to people node 2,3,4
+1,2,0,0,2
+1,3,0,0,1
+1,4,0,0,1
+
+# edges people node 2 (people to jobs)
+2,5,100,0,1
+2,6,1,0,1
+2,7,1,0,1
+2,8,1,0,1
+
+# edges people node 3 (people to jobs)
+3,5,1,0,1
+3,6,1,0,1
+3,7,1,0,1
+3,8,1,0,1
+
+# edges people node 4 (people to jobs)
+4,5,1,0,1
+4,6,1,0,1
+4,7,1,0,1
+4,8,1,0,1
+
+# edges end node 9 (jobs to sink node)
+5,9,0,1,1
+6,9,0,1,1
+7,9,0,1,1
+8,9,0,1,1
