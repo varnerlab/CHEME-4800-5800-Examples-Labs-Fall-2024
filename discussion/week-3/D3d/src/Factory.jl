@@ -1,0 +1,1 @@
+build(record::Type{T}, n::Int64, data::Array{Float64,1}) where T <: AbstractNumericalRecordType = T(n,data);

@@ -1,0 +1,49 @@
+[glucose]
+specific_growth_rate = "1.08"
+saturation_constant = "0.01"
+yield = "0.52"
+tau = "0.6226053639846744"
+beta = "0.05"
+death_rate_constant = "0.029"
+lambda = "0.0"
+emax = "1.421375085091899"
+
+[xylose]
+specific_growth_rate = "0.82"
+saturation_constant = "0.2"
+yield = "0.5"
+tau = "0.6226053639846744"
+beta = "0.05"
+death_rate_constant = "0.022"
+lambda = "0.0"
+emax = "1.846153846153846"
+
+[lactose]
+specific_growth_rate = "0.95"
+saturation_constant = "4.5"
+yield = "0.5"
+tau = "0.6226053639846744"
+beta = "0.05"
+death_rate_constant = "0.026"
+lambda = "0.0"
+emax = "1.606153846153846"
+
+[fructose]
+specific_growth_rate = "0.94"
+saturation_constant = "0.01"
+yield = "0.52"
+tau = "0.6226053639846744"
+beta = "0.05"
+death_rate_constant = "0.025"
+lambda = "2.0"
+emax = "1.6223776223776223"
+
+[arabinose]
+specific_growth_rate = "1.0"
+saturation_constant = "0.05"
+yield = "0.5"
+tau = "0.6226053639846744"
+beta = "0.05"
+death_rate_constant = "0.027"
+lambda = "0.0"
+emax = "1.5296703296703296"
