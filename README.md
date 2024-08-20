@@ -1,7 +1,7 @@
 # Introduction
 Engineering practice increasingly relies on computational tools and data analysis approaches. This one-semester course introduces computational thinking into engineering analysis. We integrate data science and statistics, artificial intelligence, and mathematical modeling approaches into the context of contemporary problems in the design and analysis of processes, products, and systems. 
 
-See the [2024-2025 Courses of Study](https://classes.cornell.edu/browse/roster/FA24/class/CHEME/4800) for more information on the course.
+See the [2024-2025 Courses of Study](https://classes.cornell.edu/browse/roster/FA24/class/CHEME/4800) for more information on the course content, policies, procedures and schedule.
 
 ## Requirements
 This course uses [the Julia programming language](https://julialang.org/downloads/) to introduce fundamental concepts of technical computing, data science, machine learning, and artificial intelligence. 
