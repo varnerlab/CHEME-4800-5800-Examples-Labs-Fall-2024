@@ -31,21 +31,19 @@ The netid field is a random string generated using `UUIDs.uuid4` from the `UUIDs
 
 See: https://docs.julialang.org/en/v1/stdlib/UUIDs/#UUIDs.uuid4
 """
-function build(model::Type{MyStudentModel}; 
-    number_of_students::Int64 = 100, max_sid::Int64 = 10000)::Array{MyStudentModel,1}
+function build(model::Type{MyStudentModel}, number_of_students::Int64 = 100; 
+    max_sid::Int64 = 10000)::Array{MyStudentModel,1}
 
     # should we check: number_of_students>0
     # before we do this, let's get to the testing phase
 
     # initialize -
-    # student_array = Array{Student,1}(undef, number_of_students) # old line -
     student_array = Array{MyStudentModel,1}(undef, number_of_students)
     for i ∈ 1:number_of_students
         
         # build a student object -
         sid = rand(1:max_sid)
         netid = string(UUIDs.uuid4())
-        # local_student_model = _build_my_model(sid = dis, netid=metid); # old line
         local_student_model = _build_student_model(sid = sid, netid=netid);
 
         # add to the array -
@@ -54,6 +52,20 @@ function build(model::Type{MyStudentModel};
 
     # return -
     return student_array
+end
+
+"""
+    function build(model::Type{MyStudentModel}; sid::Int64 = 0, netid::String = "1234")::MyStudentModel
+
+Build a `MyStudentModel` instance with the given `sid` and `netid` values. 
+
+### Arguments
+- `model::Type{MyStudentModel}`: the type of model to build
+- `sid::Int64 = 0`: the student id. Default value for sid is 0.
+- `netid::String = "1234"`: the netid. Default value for netid is "1234".
+"""
+function build(model::Type{MyStudentModel}; sid::Int64 = 0, netid::String = "1234")::MyStudentModel
+    return _build_student_model(sid = sid, netid = netid);
 end
 
 # ===== PUBLIC METHODS ABOVE HERE ==================================================================================== #

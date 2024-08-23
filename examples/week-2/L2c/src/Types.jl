@@ -1,9 +1,11 @@
 """
-    MyStudentModel
+    mutable struct MyStudentModel
 
-Mutable stuct with two fields:
-sid::Int64 - student id number
-netid::String - netid field 
+A mutable struct that models a student with a student id and a netid.
+
+## Fields
+- `sid::Int64`: the student id
+- `netid::String`: the netid
 """
 mutable struct MyStudentModel
 
