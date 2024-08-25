@@ -1,5 +1,5 @@
 # load my main code -
-include(joinpath("..", "Include.jl"))
+include("Include.jl")
 
 # load and run my test code -
 @testset verbose=true "Hello World" begin
