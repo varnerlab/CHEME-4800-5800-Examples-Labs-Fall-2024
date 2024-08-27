@@ -33,7 +33,7 @@ Pkg.add("IJulia")
 
 ## Installing GitHub Desktop
 This course uses [GitHub](https://github.com) to manage our code. You can find the installation instructions for GitHub Desktop [here](https://desktop.github.com). 
-* Once you install the GitHub desktop, you can download the labs for the course by clicking on the `Code` button on the [lab GitHub repository](https://github.com/varnerlab/CHEME-4800-5800-Labs-AY-2024.git) and then clicking on the `Open with GitHub Desktop` button. This will open GitHub Desktop and allow you to download the labs for the course.
+* Once you install the GitHub desktop, you can download the labs for the course by clicking on the `Code` button on the [lab GitHub repository](https://github.com/varnerlab/CHEME-4800-5800-Examples-Labs-Fall-2024.git) and then clicking on the `Open with GitHub Desktop` button. This will open GitHub Desktop and allow you to download the labs for the course.
 * Alternatively, you can copy the URL for the lab and paste it into the URL tab accessible from the `Add > Clone a repository` drop-down box in GitHub Desktop. This will allow you to download the labs into a local directory on your machine.
 
 ## Stretch goal: Testing your installation
