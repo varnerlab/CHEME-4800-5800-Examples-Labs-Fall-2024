@@ -1,5 +1,5 @@
 # -- PRIVATE METHODS BELOW HERE ------------------------------------------------------------------------------------------------------- #
-function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyForLoopIterationModel)::MyFibonacciSequenceModel
+function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyForLoopIterationModel)
 
     # initialize -
     n = sequencemodel.n;
@@ -16,12 +16,9 @@ function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyF
 
     # update the model -
     sequencemodel.sequence = sequence;
-
-    # return -
-    return sequencemodel;
 end
 
-function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyWhileLoopIterationModel)::MyFibonacciSequenceModel
+function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyWhileLoopIterationModel)
 
     # check: is n legit?
     n = sequencemodel.n;
@@ -52,14 +49,14 @@ function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyW
     
     # update the model -
     sequencemodel.sequence = sequence;
-
-    # return -
-    return sequencemodel;
 end
 # -- PRIVATE METHODS ABOVE HERE ------------------------------------------------------------------------------------------------------- #
 
 # -- PUBLIC METHODS BELOW HERE -------------------------------------------------------------------------------------------------------- #
-function fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::AbstractIterationModel)::MyFibonacciSequenceModel
-    return _fibonacci(sequencemodel, iterationmodel);
+"""
+    function fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::AbstractIterationModel)
+"""
+function fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::AbstractIterationModel)
+    _fibonacci(sequencemodel, iterationmodel);
 end
 # -- PUBLIC METHODS ABOVE HERE -------------------------------------------------------------------------------------------------------- #
