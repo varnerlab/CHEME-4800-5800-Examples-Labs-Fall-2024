@@ -26,7 +26,7 @@ Let's look at a few `utility` type `shell` commands:
 ```python
 exec(open("HelloWorld.py").read())
 ```
-and press `Enter.` Look at the [exec function in the Python standard library](https://docs.python.org/3/library/functions.html#exec).
+and press `Enter.` Let's look at the [exec function in the Python standard library](https://docs.python.org/3/library/functions.html#exec).
 * `Python` is (mainly) an interpreted language. The first time you execute a `Python` script, it _may_ generate a `.pyc` file, which contains the compiled bytecode of the `Python` source file. The `Python` virtual machine then executes this bytecode. Subsequent executions may be faster because `Python` can use the compiled bytecode (no compile step), and loading the bytecode (presumably smaller) may be quicker. But the execution time is the same.
 * We could also run the `HelloWorld.py` script from the terminal window by typing `python HelloWorld.py` and pressing `Enter.` Let's try it and see what happens. 
 
