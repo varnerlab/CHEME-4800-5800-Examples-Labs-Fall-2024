@@ -1,6 +1,6 @@
 # Lab 1d: Working with the Command Line Interfaces (CLIs) and the Julia, Python Interactive REPLs
 The objective of `Lab 1d` is to get familiar with the Command Line Interfaces (CLIs), i.e., the terminal window in `VSCode` and the Julia, Python Interactive REPLs (Run-Evaluate-Print-Loop).
-* Motivation: Why should we care about the command line in the age of Windows, Mac, and Linux GUIs (graphical user interfaces)? 
+* __Motivation__: Why should we care about the command line in the age of Windows, Mac, and Linux GUIs (graphical user interfaces)? 
 
 Many technical computing tasks are best done from the command line. For example, you may want to run a program 24/7 on a remote machine, run large jobs on a supercomputer, or use specialized hardware like a [Graphical Processing Unit (GPU)](https://en.wikipedia.org/wiki/Graphics_processing_unit). In these cases, you will need to use the command line. I use it daily, and I hope it's helpful.
 
