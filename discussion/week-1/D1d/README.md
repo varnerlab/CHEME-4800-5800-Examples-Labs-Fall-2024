@@ -4,6 +4,8 @@ The objective of `Lab 1d` is to get familiar with the Command Line Interfaces (C
 
 Many technical computing tasks are best done from the command line. For example, you may want to run a program 24/7 on a remote machine, run large jobs on a supercomputer, or use specialized hardware like a [Graphical Processing Unit (GPU)](https://en.wikipedia.org/wiki/Graphics_processing_unit). In these cases, you will need to use the command line. I use it daily, and I hope it's helpful.
 
+I'm going to make a change.
+
 ## Lab 1d Topics
 * You can download this lab by cloning the repository, downloading the zip file, or opening it directly in VSCode from the [course labs repository](https://github.com/varnerlab/CHEME-4800-5800-Examples-Labs-Fall-2024.git). Start `VSCode` from the `root` discussion directory.
 * `VSCode` terminal window: you can start the `VSCode` terminal window by clicking on the `Terminal` menu item and then selecting `New Terminal` or using the keyboard shortcut `Ctrl+Shift+~.` This will open a terminal window at the bottom of the `VSCode` window. 
