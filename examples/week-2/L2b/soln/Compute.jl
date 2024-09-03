@@ -26,8 +26,11 @@ function find(students::Array{MyStudentModel,1};
         test_student = students[i];
 
         # if statement: does test_student have the same sid and netid as the student that was passed in? 
-        # && operator might be handy here ...
-        throw("Find logic has not been implemented yet");
+        # what is the && operator doing here?
+        if (test_student.sid == sid && test_student.netid == netid) 
+            student_index = i; # index is i
+            break; # we found the student, so we can stop looking
+        end
     end
 
 

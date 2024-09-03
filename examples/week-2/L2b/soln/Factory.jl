@@ -1,6 +1,8 @@
 # ===== PRIVATE METHODS BELOW HERE =================================================================================== #
 """
-    build_student_model(; sid::Int64 = 0, netid::String="abc123") -> MyStudentModel
+    build_student_model(; sid::Int64 = 0, netid::String="abc123") -> Student
+
+kjHdlohasdljhasldkjhasljk
 """
 function _build_student_model(; sid::Int64 = 0, netid::String="abc123")::MyStudentModel
 
@@ -11,6 +13,8 @@ function _build_student_model(; sid::Int64 = 0, netid::String="abc123")::MyStude
     student = MyStudentModel();
     student.sid = sid;
     student.netid = netid;
+
+    #$@show student
 
     # return -
     return student;
@@ -24,11 +28,6 @@ end
 Build an array of `MyStudentModel` instances with random information.
 The sid field is a random integer in the range `1:max_sid`.
 The netid field is a random string generated using `UUIDs.uuid4` from the `UUIDs` package.
-
-### Arguments
-- `model::Type{MyStudentModel}`: the type of model to build
-- `number_of_students::Int64 = 100`: the number of students to build. Default value is 100.
-- `max_sid::Int64 = 10000`: the maximum student id. Default value is 10000.
 
 See: https://docs.julialang.org/en/v1/stdlib/UUIDs/#UUIDs.uuid4
 """
@@ -66,7 +65,7 @@ Build a `MyStudentModel` instance with the given `sid` and `netid` values.
 - `netid::String = "1234"`: the netid. Default value for netid is "1234".
 """
 function build(model::Type{MyStudentModel}; sid::Int64 = 0, netid::String = "1234")::MyStudentModel
-    throw("Build logic has not been implemented yet");
+    return _build_student_model(sid = sid, netid = netid);
 end
 
 # ===== PUBLIC METHODS ABOVE HERE ==================================================================================== #
