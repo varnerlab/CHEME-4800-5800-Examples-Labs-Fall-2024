@@ -1,5 +1,14 @@
-# should there be some documentation here?
-# what should the return type be, what are the args, what does the function do?
+"""
+    function find(students::Array{MyStudentModel,1}; sid::Int64=0, netid::String="abc123") -> Union{Int64, Nothing}
+
+The function `find` searches for a student in an array of students. The function takes in an array of `MyStudentModel` objects and two optional parameters: `sid` and `netid`. 
+The function returns the index of the student in the array if the student is found, otherwise it returns `nothing`.
+
+## Arguments
+- `students::Array{MyStudentModel,1}`: an array of `MyStudentModel` objects.
+- `sid::Int64=0`: the student ID of the student to search for. Default is `0`.
+- `netid::String="abc123"`: the net ID of the student to search for. Default is `"abc123"`.
+"""
 function find(students::Array{MyStudentModel,1}; 
     sid::Int64=0, netid::String="abc123")::Union{Int64, Nothing}
 
