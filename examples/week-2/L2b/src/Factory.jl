@@ -66,7 +66,7 @@ Build a `MyStudentModel` instance with the given `sid` and `netid` values.
 - `netid::String = "1234"`: the netid. Default value for netid is "1234".
 """
 function build(model::Type{MyStudentModel}; sid::Int64 = 0, netid::String = "1234")::MyStudentModel
-    throw("Build logic has not been implemented yet");
+    return _build_student_model(sid = sid, netid = netid);
 end
 
 # ===== PUBLIC METHODS ABOVE HERE ==================================================================================== #
