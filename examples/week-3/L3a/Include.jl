@@ -25,4 +25,5 @@ using WAV
 using DataStructures
 
 # include my codes -
+include(joinpath(_PATH_TO_SRC, "Factory.jl"));
 include(joinpath(_PATH_TO_SRC, "Files.jl"));
