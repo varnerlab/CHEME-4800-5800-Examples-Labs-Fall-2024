@@ -18,11 +18,13 @@ To populate the model with the Fibonacci sequence, pass the model instance to th
 """
 function build(modeltype::Type{MyFibonacciSequenceModel}, data::NamedTuple)
     
-    # get data from the NamedTuple -
+    # initialize -
     n = data.n;
 
     # check: is the value of n passed in by the user legit? n>=2
-    # TODO: check if n is greater than or equal to 2. If not, throw a DomainError
+    if (n < 2)
+        throw(DomainError(-2, "The value of n must be greater than or equal to 2"))
+    end
 
     # build and populate the model -
     model = modeltype(); # what is going on here?

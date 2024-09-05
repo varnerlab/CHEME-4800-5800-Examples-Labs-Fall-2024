@@ -11,11 +11,11 @@ function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyF
 
     # main loop, compute F₂, ....
     for i ∈ 2:n # what is this short-hand for?
-        # TODO: update the sequence dictionary with the next element in the sequence
+        sequence[i] = sequence[i-1] + sequence[i-2]
     end
 
     # update the model -
-    # TODO: set the sequence field of the model to the sequence dict we just computed
+    sequencemodel.sequence = sequence;
 end
 
 function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyWhileLoopIterationModel)
@@ -42,8 +42,9 @@ function _fibonacci(sequencemodel::MyFibonacciSequenceModel, iterationmodel::MyW
         i += 1; # this is short-hand for i = i + 1
 
         # check: should we go around again?
-        # TODO: update the should_loop_continue variable
-        throw("Loop termination check is not implemented yet in while loop")
+        if (i>n)
+            should_loop_continue = false;
+        end
     end
     
     # update the model -
@@ -65,6 +66,6 @@ The iteration model is used to determine the type of loop to use.
 There is no return value. The `sequencemodel` is updated in place.
 """
 function fibonacci!(sequencemodel::MyFibonacciSequenceModel, iterationmodel::AbstractIterationModel)
-    throw("The fibonacci! method is not implemented yet")
+    _fibonacci(sequencemodel, iterationmodel);
 end
 # -- PUBLIC METHODS ABOVE HERE -------------------------------------------------------------------------------------------------------- #
