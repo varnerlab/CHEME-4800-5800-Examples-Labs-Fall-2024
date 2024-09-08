@@ -1,14 +1,13 @@
 """
     function simplereadcsvfile(path::String; delim::Char=',') -> Tuple{Array{String,1}, Dict{Int64, Array{Float64,1}}}
+
 """ 
 function simplereadfile(path::String; delim::Char=',')::Tuple{Array{String,1}, Dict{Int, Array{Float64,1}}}
     
     # check: is the path arg legit? - if not throw an error
-    # TODO: check to see if the path is legit
-    # TODO: check to see if the file is a csv file
     is_path_a_path = ispath(path);
-    does_path_point_to_yaml_file = endswith(path, ".csv");
-    if (is_path_a_path == false) || (does_path_point_to_yaml_file == false)
+    does_path_point_to_csv_file = endswith(path, ".csv");
+    if (is_path_a_path == false) || (does_path_point_to_csv_file == false)
         throw(ArgumentError("The path arg must point to a CSV file."))
     end
    
@@ -107,6 +106,17 @@ function betterreadfile(path::String;
     return (header, data)
 end
 
+"""
+    function bestreadfile(path::String) -> DataFrame
+
+The function `bestreadfile` reads a CSV file using the `CSV.jl` package and returns the data as a `DataFrame` instance.
+
+### Arguments
+- `path::String` - the path to the CSV file to read.
+
+### Returns
+- `DataFrame` - the data from the CSV file as a `DataFrame` instance.
+"""
 function bestreadfile(path::String)::DataFrame
 
     # check: is the path arg legit? - if not throw an error
@@ -114,8 +124,8 @@ function bestreadfile(path::String)::DataFrame
     # TODO: check to see if the file is a csv file
 
     is_path_a_path = ispath(path);
-    does_path_point_to_yaml_file = endswith(path, ".csv");
-    if (is_path_a_path == false) || (does_path_point_to_yaml_file == false)
+    does_path_point_to_csv_file = endswith(path, ".csv");
+    if (is_path_a_path == false) || (does_path_point_to_csv_file == false)
         throw(ArgumentError("The path arg must point to a CSV file."))
     end
 
