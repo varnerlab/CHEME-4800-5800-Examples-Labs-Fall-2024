@@ -1,6 +1,15 @@
 """
     function simplereadcsvfile(path::String; delim::Char=',') -> Tuple{Array{String,1}, Dict{Int64, Array{Float64,1}}}
 
+The function `simplereadcsvfile` reads a CSV file and returns the data as a tuple containing an array of strings (header) and a dictionary of arrays of floats (data), 
+where the key is the row number of the file (starting at 1).
+
+### Arguments
+- `path::String` - the path to the CSV file to read.
+- `delim::Char` - (optional) the delimiter used in the CSV file. Default is `,`.
+
+### Returns
+- `Tuple{Array{String,1}, Dict{Int64, Array{Float64,1}}}` - a tuple containing the header (array of strings) and the data (dictionary of arrays of floats).
 """ 
 function simplereadfile(path::String; delim::Char=',')::Tuple{Array{String,1}, Dict{Int, Array{Float64,1}}}
     
@@ -48,16 +57,21 @@ end
 
 """
     betterreadcsvfile(path::String; 
-        delim::Char=',', keyindex::Int64 = 1) -> Tuple{Array{String,1}, Dict{Int, MyRuntimeNumericalRecordType}}
+        delim::Char=',') -> Tuple{Array{String,1}, Dict{Int, MyRuntimeNumericalRecordType}}
 
+The function `betterreadcsvfile` reads a CSV file and returns the data as a tuple containing an array of strings (header) and a dictionary of `MyRuntimeNumericalRecordType` instances,
+where the key is the row number of the file (starting at 1).
+
+### Arguments
+- `path::String` - the path to the CSV file to read.
+- `delim::Char` - (optional) the delimiter used in the CSV file. Default is `,`.
+
+### Returns
+- `Tuple{Array{String,1}, Dict{Int, MyRuntimeNumericalRecordType}}` - a tuple containing the header (array of strings) and the data (dictionary of `MyRuntimeNumericalRecordType` instances).
 """
-function betterreadfile(path::String; 
-    delim::Char=',', keyfielddata = 1=>Int64)::Tuple{Array{String,1}, Dict{Int, MyRuntimeNumericalRecordType}}
+function betterreadfile(path::String; delim::Char=',')::Tuple{Array{String,1}, Dict{Int, MyRuntimeNumericalRecordType}}
     
     # check: is the path arg legit? - if not throw an error
-    # TODO: check to see if the path is legit
-    # TODO: check to see if the file is a csv file
-
     is_path_a_path = ispath(path);
     does_path_point_to_yaml_file = endswith(path, ".csv");
     if (is_path_a_path == false) || (does_path_point_to_yaml_file == false)
@@ -68,7 +82,6 @@ function betterreadfile(path::String;
     counter = 1
     header = Array{String,1}()
     data = Dict{Int, MyRuntimeNumericalRecordType}()
-    keyfieldindex, keyfieldtype = keyfielddata;
 
     # main -
     open(path, "r") do io # open a stream to the file
@@ -84,20 +97,16 @@ function betterreadfile(path::String;
             else
 
                 # First, initialize some temporary storage -
-                tmpstorage = Array{Float64,1}()
-                keyfield = fields[keyfieldindex] # get a key field
+                tmpstorage = Dict{Symbol,Any}();
                 for i ∈ eachindex(fields) # iterate over the fields
-                    
-                    # for all fields NOT equal to the key field, parse the value and push it to the temporary storage
-                    if (i != keyfieldindex)
-                        push!(tmpstorage, parse(Float64, fields[i]))
-                    end
+                    push!(tmpstorage, Symbol(header[i]) => parse(Float64, fields[i])) # convert everything to a Float64 and push it to the temporary storage
                 end
 
-                # do not add bad keys -
-                if (isempty(keyfield) == false)
-                    data[parse(keyfieldtype, keyfield)] = build(MyRuntimeNumericalRecordType, parse(Int, keyfield), tmpstorage);
-                end
+                # build a record model, and store it -
+                data[counter] = build(MyRuntimeNumericalRecordType, tmpstorage |> NamedTuple);
+
+                # update the counter
+                counter += 1
             end
         end
     end

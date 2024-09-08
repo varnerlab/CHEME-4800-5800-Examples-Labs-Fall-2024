@@ -2,8 +2,8 @@ function _build(modeltype::Type{MyRuntimeNumericalRecordType}, data::NamedTuple)
 
     # get data from the NamedTuple -
     N = data.N;
-    μ = data.μ;
-    σ = data.σ;
+    μ = data.mean;
+    σ = data.std;
 
     # checks?
     # ...
@@ -31,5 +31,5 @@ The function `build` creates an instance of a mutable struct that is a subtype o
 - `T` - an instance of the mutable struct of type `record::T` populated with the data from `data::NamedTuple`.
 """
 function build(record::Type{T}, data::NamedTuple)::T where T <: AbstractNumericalRecordType 
-    return _build(T, data);
+    return _build(record, data);
 end
