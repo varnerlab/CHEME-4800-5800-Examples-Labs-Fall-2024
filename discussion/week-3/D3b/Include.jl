@@ -3,6 +3,11 @@ const _ROOT = joinpath(@__DIR__); # check out the @__DIR__ macro here: https://d
 const _PATH_TO_SRC = joinpath(_ROOT, "src");
 const _PATH_TO_SOUNDS = joinpath(_ROOT, "sounds");
 
+using Pkg;
+if (isfile(joinpath(_ROOT, "Manifest.toml")) == false) # have manifest file, we are good. Otherwise, we need to instantiate the environment
+    Pkg.activate("."); Pkg.resolve(); Pkg.instantiate(); Pkg.update();
+end
+
 # import external packages -
 using WAV; # this is a package for reading and writing .wav files (sounds)
 using PrettyTables; # this is a package for creating nice tables
