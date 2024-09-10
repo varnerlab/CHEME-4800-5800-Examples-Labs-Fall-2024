@@ -36,7 +36,6 @@ function bubble_sort(array::Array{T,1};
 
                 # TODO: swap that values at j and j+1
                 throw("The bubble_sort function is not implemented yet.");
-
             end
         end
     end
