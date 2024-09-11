@@ -8,7 +8,7 @@ port: 8080              # The port to bind the application to
 
 # A group of database options
 database:
-  host: localhost       # The database hostname
+host: localhost       # The database hostname
   port: 5432            # The port to connect to the database on
   name: mydatabase      # The name of the database
   user: myuser          # The username to connect to the database with
