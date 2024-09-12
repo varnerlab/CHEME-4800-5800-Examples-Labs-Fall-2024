@@ -1,6 +1,6 @@
 # Challenge Problem Week 3
-Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to target. 
-* You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.
+Given an array of integers `nums` and an integer `target,` return indices of the two numbers such that they add up to the target. 
+* You may assume that each input would have exactly one solution, and you may not use the same element twice. 
 
 This challenge is a variation of the [LeetCode problem `Two-sum`](https://leetcode.com/problems/two-sum/), where we'll use `Julia` to implement the solution.
 
@@ -12,7 +12,7 @@ This challenge is a variation of the [LeetCode problem `Two-sum`](https://leetco
 These examples assume a `0`-based index for arrays.
 
 ### Implementation
-Implement `twosum(nums::Array{T, 1}, target::T)::Union{Nothing, Array{Int64,1}} where T <: Number` that receives an array of integers `nums` and an integer `target`, and returns the indices of the two numbers that add up to `target`.
+Implement `twosum(nums::Array{T, 1}, target::T)::Union{Nothing, Array{Int64,1}} where T <: Number` that receives an array of integers `nums` and an integer `target`, and returns the indices of the two numbers that add up to `target.`
 
 You can test your implementation by running the following command on the Julia REPL:
 
