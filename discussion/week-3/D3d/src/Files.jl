@@ -73,8 +73,8 @@ function betterreadfile(path::String; delim::Char=',')::Tuple{Array{String,1}, D
     
     # check: is the path arg legit? - if not throw an error
     is_path_a_path = ispath(path);
-    does_path_point_to_yaml_file = endswith(path, ".csv");
-    if (is_path_a_path == false) || (does_path_point_to_yaml_file == false)
+    does_path_point_to_data_file = endswith(path, ".csv");
+    if (is_path_a_path == false) || (does_path_point_to_data_file == false)
         throw(ArgumentError("The path arg must point to a CSV file."))
     end
 
