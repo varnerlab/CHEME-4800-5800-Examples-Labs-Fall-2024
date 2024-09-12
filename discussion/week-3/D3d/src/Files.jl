@@ -129,11 +129,11 @@ The function `bestreadfile` reads a CSV file using the `CSV.jl` package and retu
 function bestreadfile(path::String)::DataFrame
 
     # check: is the path arg legit? - if not throw an error
-    is_path_a_path = ispath(path);
-    does_path_point_to_csv_file = endswith(path, ".csv");
-    if (is_path_a_path == false) || (does_path_point_to_csv_file == false)
-        throw(ArgumentError("The path arg must point to a CSV file."))
-    end
+    # is_path_a_path = ispath(path);
+    # does_path_point_to_csv_file = endswith(path, ".csv");
+    # if (is_path_a_path == false) || (does_path_point_to_csv_file == false)
+    #     throw(ArgumentError("The path arg must point to a CSV file."))
+    # end
 
     # read the file -
     return CSV.read(path, DataFrame)
