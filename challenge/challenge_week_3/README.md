@@ -9,7 +9,7 @@ This challenge is a variation of the [LeetCode problem `Two-sum`](https://leetco
 * Input: nums = [3,2,4], target = 6. Output: [1,2].
 * Input: nums = [3,3], target = 6. Output: [0,1].
 
-These examples assume a `0`-based index for arrays.
+These examples assume a `0`-based index for arrays. For your test cases, see the `testme.jl` file.
 
 ### Implementation
 Implement `twosum(nums::Array{T, 1}, target::T)::Union{Nothing, Array{Int64,1}} where T <: Number` that receives an array of integers `nums` and an integer `target`, and returns the indices of the two numbers that add up to `target.`
