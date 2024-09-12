@@ -25,11 +25,11 @@ function twosum(nums::Array{T, 1}, target::T)::Union{Nothing, Array{Int64,1}} wh
             if (pivot + nums[j]) == target
                 push!(index_array, i);
                 push!(index_array, j);
-                #return index_array;
+                return index_array;
             end
         end
     end
 
     # if no solution found, return nothing
-    return index_array;
+    return nothing;
 end

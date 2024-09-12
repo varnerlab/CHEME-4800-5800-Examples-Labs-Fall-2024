@@ -3,7 +3,7 @@ include("Include.jl")
 function main()
 
     # initialize -
-    collection_of_sample_length = range(10, stop=100, step=10) |> x -> collect(x);
+    collection_of_sample_length = [10,100,200,400,800,1000];
     results = Array{Any, 2}(undef, length(collection_of_sample_length), 2);
 
     counter = 1;
