@@ -7,6 +7,9 @@ Builds an instance of the `MyMoviewReviewRecordModel` type from a line of text.
 - `model::Type{MyMoviewReviewRecordModel}`: The type of model to build, in this case `MyMoviewReviewRecordModel`.
 - `line::String`: The line of text to parse.
 - `delim::String = ","`: The delimiter to use for parsing the line.
+
+### Returns
+- `MyMoviewReviewRecordModel`: An instance of the `MyMoviewReviewRecordModel` type.
 """
 function build(model::Type{MyMoviewReviewRecordModel}, line::String; delim::String=",")::MyMoviewReviewRecordModel
     
