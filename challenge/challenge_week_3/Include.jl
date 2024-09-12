@@ -11,6 +11,8 @@ end
 # load the packages -
 using Test
 using BenchmarkTools
+using Plots
+using Colors
 
 # include my codes -
 include(joinpath(_PATH_TO_SRC, "problem.jl"));
