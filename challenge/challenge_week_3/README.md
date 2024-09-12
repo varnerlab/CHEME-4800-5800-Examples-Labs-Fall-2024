@@ -19,3 +19,12 @@ You can test your implementation by running the following command on the Julia R
 ```julia
 include("testme.jl")
 ```
+
+### Scaling
+If you want to benchmark your implementation, you can use the following command:
+
+```julia
+include("benchmark.jl")
+```
+
+The brute force solution has a time complexity of $\mathcal{O}(n^2)$, while the optimal solution has a time complexity of $\mathcal{O}(n)$.
