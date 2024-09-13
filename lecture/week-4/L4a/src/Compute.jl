@@ -1,32 +1,26 @@
-""" 
-    hashing_vectorizer(strings::Array{String,1}; 
-        size::Int64 = 1024, tokens::Dict{String,Int64} = nothing) -> Array{Int64,1}
 
-Takes a array of strings and returns a vectorized representation of the 
-strings using a hashing vectorizer. 
 
-### Arguments
-- `strings::Array{String,1}`: An array of strings to vectorize.
-- `size::Int64 = 1024`: The size of the vector to return.
-- `hash::Dict{String, Int64} = nothing`: A dictionary of tokens to use for vectorization.
-
-### See also
-- Feature hashing: https://en.wikipedia.org/wiki/Feature_hashing
-"""
-function hashing_vectorizer(strings::Array{String,1}; 
-    size::Int64 = 1024, hash::Dict{String,Int64} = nothing)::Array{Int64,1}
+function tokenize(s::String, tokens::Dict{String, Int64}; 
+    pad::Int64 = 0, padleft::Bool = false, delim::Char = ' ')::Array{Int64,1}
 
     # initialize -
-    result = Array{Int64,1}(undef, size);
-    fill!(result, 0); # initialize the result with 0s
+    tokenarray = Array{Int64,1}();
 
-    # iterate through the strings, and compute the hash
-    for string ∈ strings
-        h = hash[string]; # returns the position of the string in the corpus
-        i = mod(h, size); # compute the index
-        result[i] += 1; # increment the count
+    # split the string -
+    fields = split(s, delim) .|> String;
+    for field ∈ fields
+        if haskey(tokens, field)
+            push!(tokenarray, tokens[field]);
+        end
     end
 
-    # return the result -
-    return result;
+    # do we need to pad?
+    if (padleft == false && pad > 0)
+        foreacth(i->push!(tokenarray, 0), 1:pad); # pad right
+    elseif (padleft == true && pad > 0)
+        foreach(i->pushfirst!(tokenarray, 0), 1:pad); # pad left
+    end
+
+    # return -
+    return tokenarray;
 end

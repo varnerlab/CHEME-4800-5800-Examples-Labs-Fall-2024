@@ -1,55 +1,34 @@
 abstract type AbstractTextRecordModel end
-abstract type AbstractTextDocumentModel end
 abstract type AbstractTextDocumentCorpusModel end
 
 """
-    MyMoviewReviewRecordModel <: AbstractTextRecordModel
+    MySarcasmRecordModel <: AbstractTextRecordModel
 
 ### Fields 
-- `fields::Array{String,1}`: The tokens found in the record in the order they were found
-- `tokenset::Set{String}`: The set of tokens in the record (no order)
-- `hash::Dict{String,Int64}`: A dictionary of tokens in alphabetical order (key: token, value: position)
-- `inverse::Dict{Int64,String}`: A dictionary mapping position to token (key: position, value: token)
+- `data::Array{String, Any}`: The data found in the record in the order they were found
 """
-mutable struct MyMoviewReviewRecordModel <: AbstractTextRecordModel
+mutable struct MySarcasmRecordModel <: AbstractTextRecordModel
     
     # data -
-    fields::Array{String,1}
-    tokenset::Set{String}
-    hash::Dict{String,Int64}
-    inverse::Dict{Int64,String}
+    data::Dict{String, Any}
     
     # constructor -
-    MyMoviewReviewRecordModel() = new(); # empty
+    MySarcasmRecordModel() = new(); # empty
 end
 
 """
-    MyMoviewReviewDocumentModel <: AbstractTextDocumentModel
+    MySarcasmRecordCorpusModel <: AbstractTextDocumentCorpusModel
 
 ### Fields
-- `fields::Array{String,1}`: The tokens (words) found in the document (collection of records) in the order they were found
-- `tokenset::Set{String}`: The set of tokens in the document (no order)
-- `hash::Dict{String,Int64}`: A dictionary of tokens in alphabetical order (key: token, value: position) for the entire document
-- `inverse::Dict{Int64,String}`: A dictionary mapping position to token (key: position, value: token) for the entire document
+- `records::Dict{Int, MySarcasmRecordModel}`: The records in the document (collection of records)
+- `tokens::Dict{String, Int64}`: A dictionary of tokens in alphabetical order (key: token, value: position) for the entire document
 """
-mutable struct MyMoviewReviewDocumentModel <: AbstractTextDocumentModel
+mutable struct MySarcasmRecordCorpusModel <: AbstractTextDocumentCorpusModel
     
     # data -
-    records::Dict{Int, MyMoviewReviewRecordModel}
-    tokenset::Set{String}
-    hash::Dict{String,Int64}
-    inverse::Dict{Int64,String}
+    records::Dict{Int, MySarcasmRecordModel}
+    tokens::Dict{String, Int64}
     
     # constructor -
-    MyMoviewReviewDocumentModel() = new(); # empty
-end
-
-mutable struct MyMoviewReviewDocumentCorpusModel <: AbstractTextDocumentModel
-    
-    # data -
-    records::Dict{Int, MyMoviewReviewDocumentModel}
-    tokens::Dict{String,Int64}
-    
-    # constructor -
-    MyMoviewReviewDocumentCorpusModel() = new(); # empty
+    MySarcasmRecordCorpusModel() = new(); # empty
 end
