@@ -64,6 +64,7 @@ function hashing(strings::Array{String,1};
 
     # iterate through the strings, and compute the hash
     for string ∈ strings
+                
         h = hash[string]; # returns the position of the string in the corpus
         i = mod(h, size); # compute the index
         result[i] += 1; # increment the count

@@ -58,6 +58,12 @@ function _build(recordtype::Type{MySarcasmRecordModel}, data::NamedTuple)::MySar
     headlinerecord = filter(c -> (c |> Int ) ≤ 255 && !(c ∈ puncuation_skip_set),
             chararray) |> String |> string-> strip(string, ' ') |> String;
 
+    # checks?
+    # if we split the headline, we should have a list of words, with no field being empty
+    fields = split(headlinerecord, ' ') .|> String
+    fields = filter(x -> x != "", fields)
+    headlinerecord = join(fields, ' ')    
+
     # create the an empty instance of the modeltype, and then add data to it
     record = recordtype();
     record.headline = headlinerecord;
