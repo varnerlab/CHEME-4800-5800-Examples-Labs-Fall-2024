@@ -1,7 +1,9 @@
 function _build(recordtype::Type{MySarcasmRecordModel}, data::NamedTuple)::MySarcasmRecordModel
     
     # get data from the NamedTuple -
-    headlinerecord = data.data;
+    headlinerecord = data.headline;
+    article = data.article;
+    issarcastic = data.issarcastic;
 
     # clean the data - do NOT include puncuation in the headline -
     puncuation_skip_set = Set{Char}();
@@ -50,15 +52,17 @@ function _build(recordtype::Type{MySarcasmRecordModel}, data::NamedTuple)::MySar
 
 
     # ok, so field is a string, and we are checking if it contains any of the puncuation characters
-    chararray = headlinerecord["headline"] |> collect;
+    chararray =  headlinerecord |> collect;
 
     # let's use the filter function to remove any puncuation characters from the field -
-    headlinerecord["headline"] = filter(c -> (c |> Int ) ≤ 255 && !(c ∈ puncuation_skip_set),
-        chararray) |> String |> string-> strip(string, ' ');
+    headlinerecord = filter(c -> (c |> Int ) ≤ 255 && !(c ∈ puncuation_skip_set),
+            chararray) |> String |> string-> strip(string, ' ') |> String;
 
     # create the an empty instance of the modeltype, and then add data to it
     record = recordtype();
-    record.data = headlinerecord;
+    record.headline = headlinerecord;
+    record.article = article;
+    record.issarcastic = issarcastic;
     
     # return the populated model -
     return record;

@@ -10,7 +10,9 @@ abstract type AbstractTextDocumentCorpusModel end
 mutable struct MySarcasmRecordModel <: AbstractTextRecordModel
     
     # data -
-    data::Dict{String, Any}
+    issarcastic::Bool
+    headline::String
+    article::String
     
     # constructor -
     MySarcasmRecordModel() = new(); # empty

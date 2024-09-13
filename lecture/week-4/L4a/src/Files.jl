@@ -14,7 +14,7 @@ function corpus(path::String)::MySarcasmRecordCorpusModel
             
             d = JSON.parse(line);
             records[counter] = build(MySarcasmRecordModel, (
-                data = d,
+                issarcastic = d["is_sarcastic"], headline = d["headline"], article = d["article_link"],
             ));
 
             counter += 1;
