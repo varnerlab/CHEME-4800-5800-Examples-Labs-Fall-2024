@@ -30,6 +30,7 @@ mutable struct MySarcasmRecordCorpusModel <: AbstractTextDocumentCorpusModel
     # data -
     records::Dict{Int, MySarcasmRecordModel}
     tokens::Dict{String, Int64}
+    inverse::Dict{Int64, String}
     
     # constructor -
     MySarcasmRecordCorpusModel() = new(); # empty
