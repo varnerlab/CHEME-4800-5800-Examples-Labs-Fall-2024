@@ -24,9 +24,12 @@ function tokenize(s::String, tokens::Dict{String, Int64};
     for field ∈ fields
         if haskey(tokens, field)
             push!(tokenarray, tokens[field]);
+        else
+            push!(tokenarray, tokens["<OOV>"]);
         end
     end
 
+    # -- PAD LOGIC ----------------------------------------------------------- #
     # do we need to pad?
     if (padleft == false && pad > 0)
         N = length(tokenarray);
@@ -35,6 +38,7 @@ function tokenize(s::String, tokens::Dict{String, Int64};
         N = length(tokenarray);
         foreach(i->pushfirst!(tokenarray, 0), (N+1):pad); # pad left
     end
+    # ----------------------------------------------------------------------- #
 
     # return -
     return tokenarray;
