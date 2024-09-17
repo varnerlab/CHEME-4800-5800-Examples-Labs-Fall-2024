@@ -33,10 +33,10 @@ function tokenize(s::String, tokens::Dict{String, Int64};
     # do we need to pad?
     if (padleft == false && pad > 0)
         N = length(tokenarray);
-        foreach(i->push!(tokenarray, 0), (N+1):pad); # pad right
+        foreach(i->push!(tokenarray, tokens["<PAD>"]), (N+1):pad); # pad right
     elseif (padleft == true && pad > 0)
         N = length(tokenarray);
-        foreach(i->pushfirst!(tokenarray, 0), (N+1):pad); # pad left
+        foreach(i->pushfirst!(tokenarray, tokens["<PAD>"]), (N+1):pad); # pad left
     end
     # ----------------------------------------------------------------------- #
 
@@ -67,11 +67,23 @@ function hashing(strings::Array{String,1};
     fill!(result, 0); # initialize the result with 0s
 
     # iterate through the strings, and compute the hash
+    frequency_dictionary = Dict{Int64, Int64}();
     for string ∈ strings
                 
         h = hash[string]; # returns the position of the string in the corpus
         i = mod(h, size); # compute the index
-        result[i] += 1; # increment the count
+        
+        if (haskey(frequency_dictionary, i) == true)
+            frequency_dictionary[i] += 1; # increment the count
+        else
+            frequency_dictionary[i] = 1; # initialize the count
+        end
+    end
+
+    # populate the result array -
+    kv = keys(frequency_dictionary) |> collect |> sort;
+    for k ∈ kv
+        result[k+1] = frequency_dictionary[k];
     end
 
     # return the result -

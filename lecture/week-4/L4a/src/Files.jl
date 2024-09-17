@@ -61,12 +61,13 @@ function corpus(path::String)::MySarcasmRecordCorpusModel
 
     # add <OOV> token -
     push!(tokenarray, "<OOV>");
+    push!(tokenarray, "<PAD>");
 
     tokenarray |> sort!
     for i ∈ eachindex(tokenarray)
         key = tokenarray[i]
-        tokendictionary[key] = i; 
-        inverse[i] = key;
+        tokendictionary[key] = i - 1; 
+        inverse[i - 1] = key;
     end
 
     # set the data on the model -
