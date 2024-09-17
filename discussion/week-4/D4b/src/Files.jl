@@ -45,7 +45,7 @@ function corpus(path::String)::MySarcasmRecordCorpusModel
 
         # process headline data -
         headline = v.headline;
-        tokens = split(headline, " ") .|> String;
+        tokens = split(headline, " ")
 
         # process -
         for token ∈ tokens
@@ -59,6 +59,7 @@ function corpus(path::String)::MySarcasmRecordCorpusModel
         end 
     end
 
+    push!(tokenarray, "<OOV>"); # add the out of vocabulary token
   
     # sort the token array, and the add to the dictionary -
     tokenarray |> sort!

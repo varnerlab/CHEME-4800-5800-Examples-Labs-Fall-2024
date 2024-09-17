@@ -5,9 +5,60 @@ function _build(recordtype::Type{MySarcasmRecordModel}, data::NamedTuple)::MySar
     article = data.article;
     issarcastic = data.issarcastic;
 
+    # clean the data - do NOT include puncuation in the headline -
+    puncuation_skip_set = Set{Char}();
+    push!(puncuation_skip_set, ',');
+    push!(puncuation_skip_set, '.');
+    push!(puncuation_skip_set, '!');
+    push!(puncuation_skip_set, '?');
+    push!(puncuation_skip_set, ';');
+    push!(puncuation_skip_set, ':');
+    push!(puncuation_skip_set, ')');
+    push!(puncuation_skip_set, '(');
+    push!(puncuation_skip_set, '\"');
+    push!(puncuation_skip_set, '/');
+    push!(puncuation_skip_set, '\\');
+    push!(puncuation_skip_set, '-');
+    push!(puncuation_skip_set, '_');
+    push!(puncuation_skip_set, '`');
+    push!(puncuation_skip_set, ''');
+    push!(puncuation_skip_set, '*');
+    push!(puncuation_skip_set, '+');
+    push!(puncuation_skip_set, '=');
+    push!(puncuation_skip_set, '@');
+    push!(puncuation_skip_set, '%');
+    push!(puncuation_skip_set, '|');
+    push!(puncuation_skip_set, '{');
+    push!(puncuation_skip_set, '}');
+    push!(puncuation_skip_set, '[');
+    push!(puncuation_skip_set, ']');
+    push!(puncuation_skip_set, '<');
+    push!(puncuation_skip_set, '>');
+    push!(puncuation_skip_set, '~');
+    push!(puncuation_skip_set, '^');
+    push!(puncuation_skip_set, '&');
+    push!(puncuation_skip_set, '$');
+    push!(puncuation_skip_set, '¿');
+    push!(puncuation_skip_set, '¡');
+    push!(puncuation_skip_set, '£');
+    push!(puncuation_skip_set, '€');
+    push!(puncuation_skip_set, '¥');
+    push!(puncuation_skip_set, '₹');   
+    push!(puncuation_skip_set, '©'); 
+    push!(puncuation_skip_set, '®');
+    push!(puncuation_skip_set, '™');
+    push!(puncuation_skip_set, '¯');
+    push!(puncuation_skip_set, '\u00a0');
+
+    # ok, so field is a string, and we are checking if it contains any of the puncuation characters
+    chararray =  headlinerecord |> collect;
+
+    # let's use the filter function to remove any puncuation characters from the field -
+    headlinerecord = filter(c -> (c |> Int ) ≤ 255 && !(c ∈ puncuation_skip_set),
+            chararray) |> String;
 
     # if we split the headline, we should have a list of words, with no field being empty
-    fields = split(headlinerecord, ' ') .|> String
+    fields = split(headlinerecord, ' ');
     fields = filter(x -> x != "", fields)
     headlinerecord = join(fields, ' '); # rejoin the fields - interesting function!    
 
