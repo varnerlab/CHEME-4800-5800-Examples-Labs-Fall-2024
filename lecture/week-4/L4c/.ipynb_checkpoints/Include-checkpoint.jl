@@ -14,7 +14,6 @@ using Test
 using BenchmarkTools
 using Plots
 using Colors
-using ProgressMeter
 
 # load my codes -
 include(joinpath(_PATH_TO_SRC, "Compute.jl"));
