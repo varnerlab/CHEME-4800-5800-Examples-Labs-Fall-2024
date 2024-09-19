@@ -25,9 +25,18 @@ end
 
 # --- PUBLIC METHODS BELOW HERE -------------------------------------------------------------------------------------------------------------------- #
 """
-    readfiles(paths::Array{String,1}; delim=",", base::String="") -> Dict{Int, MyMoviewReviewDocumentModel}
+    function readfiles(paths::Array{String,1}; delim=",", base::String="") -> Dict{Int, MyMoviewReviewRecordModel}
 
-Reads a collection of files from the paths, and returns a dictionary of `MyMoviewReviewDocumentModel` instances indexed by the file number.
+Reads a collection of files from the paths, and returns a dictionary of `MyMoviewReviewRecordModel` 
+instances indexed by the file number.
+
+### Arguments
+- `paths::Array{String,1}`: An array of paths to the files to read.
+- `delim::String = " "`: The delimiter to use for parsing the files. 
+- `base::String = ""`: The base path to use for the files. 
+
+### Returns
+- `Dict{Int, MyMoviewReviewRecordModel}`: A dictionary of `MyMoviewReviewRecordModel` instances indexed by the file number.
 """
 function readfiles(paths::Array{String,1}; delim=" ", base::String="")::Dict{Int, MyMoviewReviewRecordModel}
    

@@ -1,5 +1,60 @@
 function _deepclean(s::String)::String
-    return s;
+    #s = replace(s, r"[^a-zA-Z0-9 ]"=>""); # remove all non-alphanumeric characters: this uses regex
+
+    # remove all non-alphanumeric characters: this uses a set
+    puncuation_skip_set = Set{Char}();
+    push!(puncuation_skip_set, ',');
+    push!(puncuation_skip_set, '.');
+    push!(puncuation_skip_set, '!');
+    push!(puncuation_skip_set, '?');
+    push!(puncuation_skip_set, ';');
+    push!(puncuation_skip_set, ':');
+    push!(puncuation_skip_set, ')');
+    push!(puncuation_skip_set, '(');
+    push!(puncuation_skip_set, '\"');
+    push!(puncuation_skip_set, '/');
+    push!(puncuation_skip_set, '\\');
+    push!(puncuation_skip_set, '-');
+    push!(puncuation_skip_set, '_');
+    push!(puncuation_skip_set, '`');
+    push!(puncuation_skip_set, ''');
+    push!(puncuation_skip_set, '*');
+    push!(puncuation_skip_set, '+');
+    push!(puncuation_skip_set, '=');
+    push!(puncuation_skip_set, '@');
+    push!(puncuation_skip_set, '%');
+    push!(puncuation_skip_set, '|');
+    push!(puncuation_skip_set, '{');
+    push!(puncuation_skip_set, '}');
+    push!(puncuation_skip_set, '[');
+    push!(puncuation_skip_set, ']');
+    push!(puncuation_skip_set, '<');
+    push!(puncuation_skip_set, '>');
+    push!(puncuation_skip_set, '~');
+    push!(puncuation_skip_set, '^');
+    push!(puncuation_skip_set, '&');
+    push!(puncuation_skip_set, '$');
+    push!(puncuation_skip_set, '¿');
+    push!(puncuation_skip_set, '¡');
+    push!(puncuation_skip_set, '£');
+    push!(puncuation_skip_set, '€');
+    push!(puncuation_skip_set, '¥');
+    push!(puncuation_skip_set, '₹');   
+    push!(puncuation_skip_set, '©'); 
+    push!(puncuation_skip_set, '®');
+    push!(puncuation_skip_set, '™');
+    push!(puncuation_skip_set, '¯');
+    push!(puncuation_skip_set, '\n');
+    push!(puncuation_skip_set, '\u00a0');
+
+    # ok, so field is a string, and we are checking if it contains any of the puncuation characters
+    chararray =  s |> collect;
+
+    # let's use the filter function to remove any puncuation characters from the field -
+    cleaned_word = filter(c -> (c |> Int ) ≤ 255 && !(c ∈ puncuation_skip_set),
+            chararray) |> String;
+
+    return cleaned_word;
 end
 
 
@@ -54,7 +109,6 @@ function build(model::Type{MyMoviewReviewRecordModel}, review::String;
             push!(cleaned_fields_data, cleanedword); # add the field to the cleaned fields data
         end
     end
-    push!(tokenset, "<OOV>"); # manually add the <OOV> token to the *record* tokenset
     record.fields = cleaned_fields_data; # set the data on the model
     
     # build an ordering for the tokens -
@@ -107,6 +161,7 @@ function build(model::Type{MyMoviewReviewDocumentCorpusModel},
             push!(tokenset, token); # add the token to the tokenset
         end
     end
+    push!(tokenset, "<OOV>"); # manually add the <OOV> token -
     corpus.tokenset = tokenset; # set the data on the document
 
     # build an ordering for the tokens -
