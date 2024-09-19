@@ -1,5 +1,5 @@
 """ 
-    hashing_vectorizer(strings::Array{String,1}; 
+    hashing(strings::Array{String,1}; 
         size::Int64 = 1024, tokens::Dict{String,Int64} = nothing) -> Array{Int64,1}
 
 Takes a array of strings and returns a vectorized representation of the 
@@ -13,7 +13,7 @@ strings using a hashing vectorizer.
 ### See also
 - Feature hashing: https://en.wikipedia.org/wiki/Feature_hashing
 """
-function hashing_vectorizer(strings::Array{String,1}; 
+function hashing(strings::Array{String,1}; 
     size::Int64 = 1024, hash::Dict{String,Int64} = nothing)::Array{Int64,1}
 
     # initialize -
