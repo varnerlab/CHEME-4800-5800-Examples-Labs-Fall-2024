@@ -31,11 +31,10 @@ function read_reaction_file(path::String)::Dict{String, MyKeggReactionModel}
                 reactant = string(fields[2]);
                 product = string(fields[3]);
 
-                # build - 
-                model = build(MyKeggReactionModel, name, reactant, product);
-
-                # store -
-                reactions[name] = model;
+                # build and store -
+                reactions[name] = build(MyKeggReactionModel, (
+                        name=name, reactants=reactant, products=product
+                ));
             end
         end
     end

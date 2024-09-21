@@ -17,6 +17,7 @@ sort!(reaction_name_array);
 # TODO: Build the species_formula_array -
 tmp = Set{String}();
 for (name,model) in reactions
+    
     d_reactants = recursivesplit(model.reactants, delim='+');
     d_products = recursivesplit(model.products, delim='+');
    

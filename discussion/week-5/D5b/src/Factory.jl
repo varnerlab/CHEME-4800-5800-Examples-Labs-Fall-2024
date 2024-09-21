@@ -4,13 +4,16 @@
 Factory method to build an instance of the MyKeggReaction type. MyKeggReaction is a model of the
 information contained in the Reactions.net file
 """
-function build(type::Type{MyKeggReactionModel}, name::String, reactants::String, products::String)::MyKeggReactionModel
+function build(modeltype::Type{MyKeggReactionModel}, data::NamedTuple)::MyKeggReactionModel
 
     # check: name, reactants and products correct?
     # in production, we'd check this. Assume these are ok now
+    name = data.name;
+    reactants = data.reactants;
+    products = data.products;
 
     # initialize -
-    model = MyKeggReactionModel(); # build an empty model 
+    model = modeltype(); # build an empty model 
 
     # add data to the model -
     model.name = name;
