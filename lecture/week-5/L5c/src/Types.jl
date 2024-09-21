@@ -1,7 +1,13 @@
 abstract type AbstractPriceTreeModel end
 
 """
-    Type: ArrayBasedTernaryCommodityPriceTree
+    mutable struct ArrayBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
+
+The `ArrayBasedTernaryCommodityPriceTree` type is a model of a ternary commodity price tree that uses an dictionary to store the price data.
+This model does not store the connectivity information between nodes. 
+
+### Fields
+- `data::Dict{Int64,Float64}`: A dictionary that stores the price data for the tree.
 """
 mutable struct ArrayBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
 
@@ -13,7 +19,14 @@ mutable struct ArrayBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
 end
 
 """
-    Type: AdjacencyBasedTernaryCommodityPriceTree
+    mutable struct AdjacencyBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
+
+The `AdjacencyBasedTernaryCommodityPriceTree` type is a model of a ternary commodity price tree that uses an dictionary to store the price data.
+This model stores the connectivity information between nodes.
+
+### Fields
+- `data::Dict{Int64,Float64}`: A dictionary that stores the price data for the tree.
+- `connectivity::Dict{Int64,Array{Int64,1}}`: A dictionary that stores the connectivity information between nodes.
 """
 mutable struct AdjacencyBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
 
