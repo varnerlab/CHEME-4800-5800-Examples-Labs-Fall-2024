@@ -1,5 +1,15 @@
 """
-    quicksort(arr::Array{T,1}) -> Array{T,1} where T <: Number
+    function quicksort(arr::Array{T,1}) -> Array{T,1} where T <: Number
+
+The `quicksort` function sorts an array of numbers using the quicksort algorithm.
+
+### Arguments
+- `arr::Array{T,1}`: An array of numbers to be sorted where `T` is a subtype of `Number`.
+
+### Returns
+- `Array{T,1}`: A sorted array of numbers where `T` is a subtype of `Number`.
+
+See: https://en.wikipedia.org/wiki/Quicksort
 """
 function quicksort(arr::Array{T,1})::Array{T,1} where T <: Number
     
@@ -37,6 +47,41 @@ function quicksort(arr::Array{T,1})::Array{T,1} where T <: Number
         # return: this line creates (and returns) an array with the smaller part, the pivot and the larger part
         return [quicksort(smaller_array); pivot; quicksort(larger_array)]
     end
+end
+
+"""
+    function bubblesort(arr::Array{T,1}) -> Array{T,1} where T <: Number
+
+The `bubblesort` function sorts an array of numbers using the bubblesort algorithm.
+
+### Arguments
+- `arr::Array{T,1}`: An array of numbers to be sorted where `T` is a subtype of `Number`.
+
+### Returns
+- `Array{T,1}`: A sorted array of numbers where `T` is a subtype of `Number`.
+
+See: https://en.wikipedia.org/wiki/Bubble_sort
+"""
+function bubblesort(arr::Array{T,1})::Array{T,1} where T <: Number
+
+    # initialize -
+    N = length(arr)
+
+    # main -
+    for i ∈ 1:N
+        for j ∈ 1:N-i
+            if arr[j] > arr[j+1]
+
+                # swap that values at j and j+1
+                tmp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = tmp
+            end
+        end
+    end
+
+    # return sorted array -
+    return arr
 end
 
 
@@ -130,27 +175,4 @@ function memoization_fibonacci!(n::Int64, series::Dict{Int64,Int64})
     end
 end
 
-"""
-    bubblesort(arr::Array{T,1}) -> Array{T,1} where T <: Number
-"""
-function bubblesort(arr::Array{T,1})::Array{T,1} where T <: Number
 
-    # initialize -
-    N = length(arr)
-
-    # main -
-    for i ∈ 1:N
-        for j ∈ 1:N-i
-            if arr[j] > arr[j+1]
-
-                # swap that values at j and j+1
-                tmp = arr[j]
-                arr[j] = arr[j+1]
-                arr[j+1] = tmp
-            end
-        end
-    end
-
-    # return sorted array -
-    return arr
-end
