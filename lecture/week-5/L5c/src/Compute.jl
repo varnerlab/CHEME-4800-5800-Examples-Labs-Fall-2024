@@ -1,7 +1,17 @@
 """
-    myhash(key::String, β::Int64, size::Int64)::Int64
+    function myhash(key::String, β::Int64, size::Int64) -> Int64
 
-Convert a String `key` to `Int` for an array of type `size`:
+The `myhash` function computes a hash value for a given `key` string. 
+The hash value is computed using the `β` and `size` parameters. The function returns the hash value as an `Int64`.
+
+### Arguments
+- `key::String`: A string to be hashed.
+- `β::Int64`: A prime number used in the hash computation. Default is `31`.
+- `size::Int64`: The size of the hash table. Default is `1000`.
+
+### Returns
+- `Int64`: The hash value for the given `key` string.
+
 """
 function myhash(key::String; β::Int64 = 31, size::Int64 = 1000)::Int64
 
@@ -11,8 +21,7 @@ function myhash(key::String; β::Int64 = 31, size::Int64 = 1000)::Int64
     # main loop -
     for i ∈ eachindex(key)
         keyvalue = key[i];
-        tmpvalue = hash*β + convert(Int, keyvalue)
-        hash = mod(tmpvalue, size)
+        hash = (hash*β + convert(Int, keyvalue)) |> x -> mod(x, size);
     end
 
     # return -
