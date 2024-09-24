@@ -12,7 +12,7 @@ reaction_name_array = Array{String,1}();
 for (k,v) ∈ reactions
     push!(reaction_name_array, v.name)
 end
-sort!(reaction_name_array);
+sort!(reaction_name_array); # sorts the array in place.
 
 # TODO: Build the species_formula_array -
 tmp = Set{String}();
