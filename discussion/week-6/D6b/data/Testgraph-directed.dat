@@ -1,0 +1,6 @@
+0 1 1 0 0 0 # node 0 is connected to node 1 and 2
+0 0 1 1 0 0 # node 1 is connected to node 2 and 3
+0 0 0 0 1 0 # node 2 is connected to node 4
+0 0 0 0 0 1 # node 3 is connected to node 5
+0 0 0 1 0 0 # node 4 is connected to node 3
+0 0 0 0 0 0 # node 5 is not connected to any other node
