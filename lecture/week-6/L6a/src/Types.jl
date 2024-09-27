@@ -1,30 +1,55 @@
-abstract type AbstractPriceTreeModel end
+abstract type MyAbstractGraphModel end
+abstract type MyAbstractGraphNodeModel end
+abstract type MyAbstractGraphEdgeModel end
+abstract type MyAbstractGraphSearchAlgorithm end
 
-"""
-    Type: ArrayBasedTernaryCommodityPriceTree
-"""
-mutable struct ArrayBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
+mutable struct MyGraphNodeModel <: MyAbstractGraphNodeModel
+   
+   # data -
+   id::Int64
 
-    # data -
-    data::Dict{Int64,Float64}
-    h::Int64; # height of the tree
-    k::Int64; # branching factor of the tree
-
-    # constructor 
-    ArrayBasedTernaryCommodityPriceTree() = new()
+   # constructor -
+   MyGraphNodeModel(id::Int64) = new(id);
 end
 
-"""
-    Type: AdjacencyBasedTernaryCommodityPriceTree
-"""
-mutable struct AdjacencyBasedTernaryCommodityPriceTree <: AbstractPriceTreeModel
+mutable struct MyGraphEdgeModel <: MyAbstractGraphEdgeModel
+   
+   # data -
+   id::Int64
+   source::Int64
+   target::Int64
+   weight::Union{Nothing, Float64}; # this is a little fancy??
 
+    # constructor -
+    MyGraphEdgeModel() = new();
+end
+
+mutable struct MySimpleDirectedGraphModel <: MyAbstractGraphModel
+   
+   # data -
+   nodes::Union{Nothing, Dict{Int64, MyGraphNodeModel}}
+   edges::Union{Nothing, Dict{Tuple{Int, Int}, Int64}}
+   children::Union{Nothing, Dict{Int64, Set{Int64}}}
+
+   # constructor -
+   MySimpleDirectedGraphModel() = new();
+end
+
+mutable struct MySimpleUndirectedGraphModel <: MyAbstractGraphModel
+   
     # data -
-    data::Dict{Int64,Float64}; # price of the commodity at each node (data)
-    connectivity::Dict{Int64,Array{Int64,1}}; # connectivity of the tree
-    h::Int64; # height of the tree
-    k::Int64; # branching factor of the tree
+    nodes::Union{Nothing, Dict{Int64, MyGraphNodeModel}}
+    edges::Union{Nothing, Dict{Tuple{Int, Int}, Int64}}
+    children::Union{Nothing, Dict{Int64, Set{Int64}}}
+ 
+    # constructor -
+    MySimpleUndirectedGraphModel() = new();
+ end
 
-    # constructor 
-    AdjacencyBasedTernaryCommodityPriceTree() = new()
+struct DikjstraAlgorithm <: MyAbstractGraphSearchAlgorithm
+   DikjstraAlgorithm() = new();
+end
+
+struct BellmanFordAlgorithm <: MyAbstractGraphSearchAlgorithm
+   BellmanFordAlgorithm() = new();
 end

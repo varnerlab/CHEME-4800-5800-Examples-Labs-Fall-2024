@@ -1,20 +1,41 @@
-"""
-    myhash(key::String, β::Int64, size::Int64)::Int64
-
-Convert a String `key` to `Int` for an array of type `size`:
-"""
-function myhash(key::String; β::Int64 = 31, size::Int64 = 1000)::Int64
-
+function _children(edges::Dict{Tuple{Int64, Int64}, Int64}, id::Int64)::Set{Int64}
+    
     # initialize -
-    hash = 0
-
-    # main loop -
-    for i ∈ eachindex(key)
-        keyvalue = key[i];
-        tmpvalue = hash*β + convert(Int, keyvalue)
-        hash = mod(tmpvalue, size)
+    childrenset = Set{Int64}();
+    
+    # Dumb implementation - why?
+    for (k, _) ∈ edges
+        if k[1] == id
+            push!(childrenset, k[2]);
+        end
     end
 
     # return -
-    return hash
+    return childrenset;
 end
+
+function _convert(graphmodel::T) where T <: MyAbstractGraphModel
+
+    # initialize -
+    number_of_nodes = length(graphmodel.nodes)
+    g = SimpleDiGraph(number_of_nodes);
+
+    # add edges -
+    for (k, v) ∈ graphmodel.edges
+        add_edge!(g, k[1], k[2]);
+    end
+   
+    return g;
+end
+
+"""
+    function children(graph::T, node::MyGraphNodeModel) -> Set{Int64} where T <: MyAbstractGraphModel
+"""
+function children(graph::T, node::MyGraphNodeModel)::Set{Int64} where T <: MyAbstractGraphModel
+    return graph.children[node.id];
+end
+
+function weight(graph::T, source::Int64, target::Int64)::Float64 where T <: MyAbstractGraphModel
+    return graph.edges[(source, target)];
+end
+
