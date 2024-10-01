@@ -19,7 +19,9 @@ function DFS(graph::T, node::MyGraphNodeModel, visited::Set{Int64}) where T <: M
      
          # visit the children -
          for child in mychildren
-             DFS(graph, graph.nodes[child], visited); 
+            if (in(child, visited) == false)
+                DFS(graph, graph.nodes[child], visited); 
+            end
          end
      end
  
