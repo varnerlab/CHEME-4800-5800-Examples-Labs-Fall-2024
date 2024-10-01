@@ -1,6 +1,16 @@
 
 """
-    function build(model::Type{T}, data::Dict{String, Any}) where T <: MyAbstractGraphModel
+    function build(model::Type{T}, data::Array{Int64,2}) where T <: MyAbstractGraphModel
+
+This function builds a graph model from an adjacency matrix.
+
+### Arguments
+- `model::Type{T}`: the type of the graph model to build. This is a subtype of `MyAbstractGraphModel`.
+- `data::Array{Int64,2}`: the adjacency matrix.
+
+### Returns
+- `T`: the populated graph model.
+
 """
 function build(model::Type{T}, data::Array{Int64,2}) where T <: MyAbstractGraphModel
 
