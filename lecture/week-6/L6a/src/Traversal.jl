@@ -15,6 +15,8 @@ function DFS(graph::T, node::MyGraphNodeModel, visited::Set{Int64}; verbose::Boo
         end
 
         push!(visited, node.id); # add this node to the visited set -
+
+        @show "Visiting: $(node.id)";
        
         # write a frame -
         if (verbose == true)
@@ -29,6 +31,8 @@ function DFS(graph::T, node::MyGraphNodeModel, visited::Set{Int64}; verbose::Boo
             end
         end
     end
+
+    @show "Returning from: $(node.id)";
 end
 
 
@@ -51,6 +55,9 @@ function BFS(graph::T, node::MyGraphNodeModel; verbose::Bool = false) where T <:
         v = dequeue!(q);
         if (in(v,visited) == false)           
             push!(visited, v);
+
+            @show "Visiting: $(v)";
+
             mychildren = children(graph, graph.nodes[v]);
             for child in mychildren
                 if (in(child, visited) == false) # mod: don't enqueue if the child has already been visited
@@ -62,7 +69,7 @@ function BFS(graph::T, node::MyGraphNodeModel; verbose::Bool = false) where T <:
         # print - if verbose is true
         if (verbose == true)
             _writeframe(_convert(graph), visited, v, framecounter; prefix="BFS_");
-            #@show "Visiting: $(v)";
+            # @show "Visiting: $(v)";
         end
 
         framecounter += 1;
