@@ -1,5 +1,12 @@
 """
     DFS(graph::T, node::MyGraphNodeModel, visited::Set{Int64}) where T <: MyAbstractGraphModel
+
+This function performs a depth-first search on a graph model.
+
+### Arguments
+- `graph::T`: the graph model to search. This is a subtype of `MyAbstractGraphModel`.
+- `node::MyGraphNodeModel`: the node to start the search from.
+- `visited::Set{Int64}`: a set of visited node ids.
 """
 function DFS(graph::T, node::MyGraphNodeModel, visited::Set{Int64}) where T <: MyAbstractGraphModel
 
@@ -25,6 +32,13 @@ end
 
 """
     BFS(graph::T, node::MyGraphNodeModel) where T <: MyAbstractGraphModel
+
+This function performs a breadth-first search on a graph model.
+
+### Arguments
+- `graph::T`: the graph model to search. This is a subtype of `MyAbstractGraphModel`.
+- `node::MyGraphNodeModel`: the node to start the search from.
+
 """
 function BFS(graph::T, node::MyGraphNodeModel) where T <: MyAbstractGraphModel
 
