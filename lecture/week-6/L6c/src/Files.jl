@@ -1,3 +1,11 @@
+
+"""
+    function readnodesfile(filepath::String; comment::Char='#', delim::Char=',') -> Dict{Int64,MyGraphEdgeModel}
+
+This function reads a file containing edge data and returns a dictionary of edge models.
+
+### Arguments
+"""
 function readedgesfile(filepath::String; comment::Char='#', 
     delim::Char=',')::Dict{Int64,MyGraphEdgeModel}
 

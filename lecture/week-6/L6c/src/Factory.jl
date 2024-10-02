@@ -13,6 +13,109 @@ function _build(edgemodel::Type{MyGraphEdgeModel}, parts::Array{String,1}, id::I
     return model
 end
 
+# -- PUBLIC METHODS BELOW HERE ---------------------------------------------------------------------------------------- #
+
+"""
+    function build(model::Type{SimpleGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel}) -> SimpleGraph
+
+This function builds a simple graph model from a dictionary of edge models. SimpleGraph is exported by the Graphs.jl package.
+
+### Arguments
+- `model::Type{SimpleGraph}`: the type of graph model to build. Must be a subtype of `SimpleGraph`.
+- `edgemodels::Dict{Int64, MyGraphEdgeModel}`: a dictionary of edge models. The keys are the edge ids, and the values are the edge models.
+
+### Returns
+- a populated graph model of type `SimpleGraph`.
+"""
+function build(model::Type{SimpleGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel})::SimpleGraph
+
+    # initialize 
+    tmp_node_ids = Set{Int64}();
+    for (_,v) ∈ edgemodels
+        push!(tmp_node_ids, v.source);
+        push!(tmp_node_ids, v.target);
+    end
+    list_of_node_ids = tmp_node_ids |> collect |> sort;
+    
+    # remap the node ids -
+    nodeidmap = Dict{Int64, Int64}();
+    nodecounter = 1;
+    for id ∈ list_of_node_ids
+        nodeidmap[id] = nodecounter;
+        nodecounter += 1;
+    end
+    
+    # let's build a list of nodes ids -
+    tmp_edge_list = Array{Tuple{Int64, Int64},1}();
+    for (_,v) ∈ edgemodels
+        
+        source_index = nodeidmap[v.source];
+        target_index = nodeidmap[v.target];
+        push!(tmp_edge_list, (source_index, target_index));
+    end
+    el = Edge.(tmp_edge_list);
+
+    # return -
+    return model(el);
+end
+
+"""
+    function build(model::Type{SimpleDiGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel}) -> SimpleDiGraph
+
+This function builds a simple directed graph model from a dictionary of edge models. SimpleDiGraph is exported by the Graphs.jl package.
+
+### Arguments
+- `model::Type{SimpleDiGraph}`: the type of graph model to build. Must be a subtype of `SimpleDiGraph`.
+- `edgemodels::Dict{Int64, MyGraphEdgeModel}`: a dictionary of edge models. The keys are the edge ids, and the values are the edge models.
+
+### Returns
+- a populated graph model of type `SimpleDiGraph`.
+"""
+function build(model::Type{SimpleDiGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel})::SimpleDiGraph
+
+    # initialize
+    tmp_node_ids = Set{Int64}();
+    for (_,v) ∈ edgemodels
+        push!(tmp_node_ids, v.source);
+        push!(tmp_node_ids, v.target);
+    end
+    list_of_node_ids = tmp_node_ids |> collect |> sort;
+    
+    # remap the node ids -
+    nodeidmap = Dict{Int64, Int64}();
+    nodecounter = 1;
+    for id ∈ list_of_node_ids
+        nodeidmap[id] = nodecounter;
+        nodecounter += 1;
+    end
+    
+    # let's build a list of nodes ids -
+    tmp_edge_list = Array{Tuple{Int64, Int64},1}();
+    for (_,v) ∈ edgemodels
+        
+        source_index = nodeidmap[v.source];
+        target_index = nodeidmap[v.target];
+        push!(tmp_edge_list, (source_index, target_index));
+    end
+    el = Edge.(tmp_edge_list);
+
+    # return -
+    return model(el);
+end
+
+
+"""
+    function build(model::Type{T}, edgemodels::Dict{Int64, MyGraphEdgeModel})::T where T <: MyAbstractGraphModel
+
+This function builds a graph model from a dictionary of edge models.
+
+### Arguments
+- `model::Type{T}`: the type of graph model to build. Must be a subtype of `MyAbstractGraphModel`.
+- `edgemodels::Dict{Int64, MyGraphEdgeModel}`: a dictionary of edge models. The keys are the edge ids, and the values are the edge models.
+
+### Returns
+- a populated graph model of type `T`.
+"""
 function build(model::Type{T}, edgemodels::Dict{Int64, MyGraphEdgeModel}) where T <: MyAbstractGraphModel
 
     # build and empty graph model -
@@ -62,70 +165,4 @@ function build(model::Type{T}, edgemodels::Dict{Int64, MyGraphEdgeModel}) where 
     # return -
     return graphmodel;
 end
-
-"""
-    function build(model::Type{SimpleGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel}) -> SimpleGraph
-"""
-function build(model::Type{SimpleGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel})::SimpleGraph
-
-    # initialize 
-    tmp_node_ids = Set{Int64}();
-    for (_,v) ∈ edgemodels
-        push!(tmp_node_ids, v.source);
-        push!(tmp_node_ids, v.target);
-    end
-    list_of_node_ids = tmp_node_ids |> collect |> sort;
-    
-    # remap the node ids -
-    nodeidmap = Dict{Int64, Int64}();
-    nodecounter = 1;
-    for id ∈ list_of_node_ids
-        nodeidmap[id] = nodecounter;
-        nodecounter += 1;
-    end
-    
-    # let's build a list of nodes ids -
-    tmp_edge_list = Array{Tuple{Int64, Int64},1}();
-    for (_,v) ∈ edgemodels
-        
-        source_index = nodeidmap[v.source];
-        target_index = nodeidmap[v.target];
-        push!(tmp_edge_list, (source_index, target_index));
-    end
-    el = Edge.(tmp_edge_list);
-
-    # return -
-    return model(el);
-end
-
-function build(model::Type{SimpleDiGraph}, edgemodels::Dict{Int64, MyGraphEdgeModel})::SimpleDiGraph
-
-    # initialize
-    tmp_node_ids = Set{Int64}();
-    for (_,v) ∈ edgemodels
-        push!(tmp_node_ids, v.source);
-        push!(tmp_node_ids, v.target);
-    end
-    list_of_node_ids = tmp_node_ids |> collect |> sort;
-    
-    # remap the node ids -
-    nodeidmap = Dict{Int64, Int64}();
-    nodecounter = 1;
-    for id ∈ list_of_node_ids
-        nodeidmap[id] = nodecounter;
-        nodecounter += 1;
-    end
-    
-    # let's build a list of nodes ids -
-    tmp_edge_list = Array{Tuple{Int64, Int64},1}();
-    for (_,v) ∈ edgemodels
-        
-        source_index = nodeidmap[v.source];
-        target_index = nodeidmap[v.target];
-        push!(tmp_edge_list, (source_index, target_index));
-    end
-    el = Edge.(tmp_edge_list);
-
-    # return -
-    return model(el);
-end
+# --- PUBLIC METHODS ABOVE HERE --------------------------------------------------------------------------------------- #

@@ -46,6 +46,7 @@ mutable struct MySimpleUndirectedGraphModel <: MyAbstractGraphModel
     MySimpleUndirectedGraphModel() = new();
  end
 
+ 
 struct DikjstraAlgorithm <: MyAbstractGraphSearchAlgorithm
    DikjstraAlgorithm() = new();
 end
