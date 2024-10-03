@@ -1,6 +1,7 @@
 # setup paths -
 const _ROOT = @__DIR__
 const _PATH_TO_SRC = joinpath(_ROOT, "src")
+const _PATH_TO_SOLN = joinpath(_ROOT, "solutions")
 const _PATH_TO_DATA = joinpath(_ROOT, "data")
 
 # check for packages, if not installed, install them
