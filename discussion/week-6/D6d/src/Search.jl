@@ -70,7 +70,7 @@ function _search(graph::T, start::MyGraphNodeModel, algorithm::BellmanFordAlgori
     number_of_nodes = length(nodes);
 
     # TODO: implement the Bellman Ford algorithm here
-    throw("Ooops! The Bellman Ford algorithm is not implemented yet!");
+    # throw("Ooops! The Bellman Ford algorithm is not implemented yet!");
 
     # check fo
     return distances, previous;
