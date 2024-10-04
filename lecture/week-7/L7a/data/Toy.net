@@ -1,0 +1,10 @@
+// main reactions
+v1,A1+x,B+y,false
+v2,B,P,false
+v3,A2+y,C+x,false
+
+// exchanges
+// b1,A1,A1x,true
+// b2,A2,A2x,true
+// b3,P,Px,true
+// b4,C,Cx,true
