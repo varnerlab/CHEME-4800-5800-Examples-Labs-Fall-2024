@@ -16,6 +16,12 @@ $$
 where $\dot{n}_{is}$ is the mole flow rate of species $i$ in stream $s$ (units:mol/time), $d_{s}$ is the direction of stream $s$ (units: dimensionless),
 $\sigma_{ij}$ is the stoichiometric coefficient for species $i$ in reaction $j$ (units: dimensionless), and $\dot{\epsilon}_{j}$ is the open extent of reaction $j$ (units: mol/time).
 
+<div>
+    <center>
+        <img src="figs/FigToyNetwork.png" width="480"/>
+    </center>
+</div>
+
 ## Task 1: Compute the stoichiometric matrix $\mathbf{S}$ (together)
 __Duration 15 min__: Together, let's analyze the codes to compute the stoichiometric matrix $\mathbf{S}$ for the reactions encoded in the [Toy.net](/data/Toy.net) file.
 * Review the `readreactionfile` function in `src/Files.jl` to read the reaction file and return the reaction dictionary `R,` whose keys are the line number from [Toy.net](/data/Toy.net)   the list of `MyChemicalReactionModel` objects. 
