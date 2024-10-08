@@ -1,0 +1,4 @@
+// main reactions
+v1,A1+x,B+y,false
+v2,B,P,false
+v3,A2+y,C+x,false
