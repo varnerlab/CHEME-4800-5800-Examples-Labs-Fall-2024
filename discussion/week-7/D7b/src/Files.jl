@@ -1,5 +1,16 @@
 """
     readreactionfile(path::String; comment::String = "#", delim::Char=',', expand::Bool = false) -> Dict{Int64, MyChemicalReactionModel}
+
+The `readreactionfile` function reads a reaction file and returns a dictionary of chemical reaction objects.
+
+### Arguments
+- `path::String`: The path to the reaction file.
+- `comment::String`: The comment character (default is `#`).
+- `delim::Char`: The delimiter character (default is `,`).
+- `expand::Bool`: If `true`, the reversible reaction is split into two irreversible reactions (default is `false`).
+
+### Returns
+- `Dict{Int64, MyChemicalReactionModel}`: A dictionary of chemical reaction objects, where the key is the reaction index and the value is a `MyChemicalReactionModel` instance.
 """
 function readreactionfile(path::String; 
     comment::String = "#", delim::Char=',', expand::Bool = false)::Dict{Int64, MyChemicalReactionModel}

@@ -76,3 +76,51 @@ function _compute_stoichiometric_matrix(reactions::Dict{Int64, MyChemicalReactio
      # return -
      return (matrix, speciesnames, reactionnames);
 end
+
+# --- PRIVATE METHODS ABOVE HERE ------------------------------------------------------------------------------------------------ #
+
+# --- PUBLIC METHODS BELOW HERE ------------------------------------------------------------------------------------------------- #
+"""
+    function isdiagonaldominant(A::Array{T,2})::Bool where T <: Number
+
+Check if the matrix is diagonally dominant.
+
+### Arguments
+- `A::Array{T,2}`: The matrix to check, where `T` is a subtype of `Number`.
+
+### Returns
+- `Bool`: `true` if the matrix is diagonally dominant, `false` otherwise.
+"""
+function isdiagonaldominant(A::Array{T,2})::Bool where T <: Number
+
+    # initialize -
+    number_of_rows = size(A,1);
+    number_of_columns = size(A,2);
+    is_diagonal_dominant = true;
+
+    # loop over the rows -
+    for i ∈ 1:number_of_rows
+
+        # initialize -
+        row_sum = 0.0;
+
+        # loop over the columns -
+        for j ∈ 1:number_of_columns
+
+            # skip the diagonal -
+            if (i != j)
+                row_sum += abs(A[i,j]);
+            end
+        end
+
+        # check -
+        if (abs(A[i,i]) < row_sum)
+            is_diagonal_dominant = false;
+            break;
+        end
+    end
+
+    # return -
+    return is_diagonal_dominant;
+end
+# --- PRIVATE METHODS ABOVE HERE ------------------------------------------------------------------------------------------------ #
