@@ -15,7 +15,7 @@ end
 my_list_of_tickers = keys(dataset) |> collect |> x->sort(x);
 
 # compute the growth rate matrix -
-X = μ(dataset, my_list_of_tickers) |> x-> transpose(x) |> Matrix;
+market_matrix = μ(dataset, my_list_of_tickers) |> x-> transpose(x) |> Matrix;
 
 # compute the singular value decomposition -
 (U,Σ,V) = svd(market_matrix);
