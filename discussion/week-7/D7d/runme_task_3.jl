@@ -6,7 +6,7 @@ include("runme_task_1.jl");
 M = zeros(number_of_rows, number_of_columns);
 
 # let's visualize the SVD of the growth matrix -
-my_frame_cutoff = nothing; # TODO: replace this with the number of frames you want to generate;
+my_frame_cutoff = 270; # TODO: replace this with the number of frames you want to generate;
 iter = ProgressBar(1:my_frame_cutoff);
 for i ∈ iter
 
