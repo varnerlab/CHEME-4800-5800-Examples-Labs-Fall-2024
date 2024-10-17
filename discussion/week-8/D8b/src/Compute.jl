@@ -1,144 +1,134 @@
+
 """
-    μ(dataset::Dict{String, DataFrame}, firms::Array{String,1}; 
-        Δt::Float64 = (1.0/252.0), risk_free_rate::Float64 = 0.0) -> Array{Float64,2}
+    function tokenize(s::String, tokens::Dict{String, Int64}; 
+        pad::Int64 = 0, padleft::Bool = false, delim::Char = ' ') -> Array{Int64,1}
+
+### Arguments
+- `s::String` - the string to tokenize.
+- `tokens::Dict{String, Int64}` - a dictionary of tokens in alphabetical order (key: token, value: position) for the entire document.
+- `pad::Int64` - (optional) the number of padding tokens to add to the end of the tokenized string. Default is `0`.
+- `padleft::Bool` - (optional) if `true`, the padding tokens are added to the beginning of the tokenized string. Default is `false`.
+- `delim::Char` - (optional) the delimiter used in the string. Default is `' '`.
+
+### Returns
+- `Array{Int64,1}` - an array of integers representing the vectorized string.
 """
-function μ(dataset::Dict{String, DataFrame}, 
-    firms::Array{String,1}; Δt::Float64 = (1.0/252.0), risk_free_rate::Float64 = 0.0)::Array{Float64,2}
+function tokenize(s::String, tokens::Dict{String, Int64}; 
+    pad::Int64 = 0, padleft::Bool = false, delim::Char = ' ')::Array{Int64,1}
 
     # initialize -
-    number_of_firms = length(firms);
-    number_of_trading_days = nrow(dataset["AAPL"]);
-    growth_matrix = Array{Float64,2}(undef, number_of_trading_days-1, number_of_firms);
+    tokenarray = Array{Int64,1}();
 
-    # main loop -
-    for i ∈ eachindex(firms) 
-
-        # get the firm data -
-        firm_index = firms[i];
-        firm_data = dataset[firm_index];
-
-        # compute the log returns -
-        for j ∈ 2:number_of_trading_days
-            S₁ = firm_data[j-1, :volume_weighted_average_price];
-            S₂ = firm_data[j, :volume_weighted_average_price];
-            growth_matrix[j-1, i] = (1/Δt)*log(S₂/S₁) - risk_free_rate;
+    # split the string -
+    fields = split(s, delim) .|> String;
+    for field ∈ fields
+        if haskey(tokens, field)
+            push!(tokenarray, tokens[field]);
+        else
+            push!(tokenarray, tokens["<OOV>"]);
         end
     end
 
+    # -- PAD LOGIC ----------------------------------------------------------- #
+    # do we need to pad?
+    if (padleft == false && pad > 0)
+        N = length(tokenarray);
+        foreach(i->push!(tokenarray, tokens["<PAD>"]), (N+1):pad); # pad right
+    elseif (padleft == true && pad > 0)
+        N = length(tokenarray);
+        foreach(i->pushfirst!(tokenarray, tokens["<PAD>"]), (N+1):pad); # pad left
+    end
+    # ----------------------------------------------------------------------- #
+
     # return -
-    return growth_matrix;
+    return tokenarray;
 end
 
+""" 
+    hashing_vectorizer(strings::Array{String,1}; 
+        size::Int64 = 1024, tokens::Dict{String,Int64} = nothing) -> Array{Int64,1}
 
-"""
-    ⊗(a::Array{Float64,1},b::Array{Float64,1}) -> Array{Float64,2}
-
-Compute the outer product of two vectors `a` and `b` and returns a matrix.
+Takes a array of strings and returns a vectorized representation of the 
+strings using a hashing vectorizer. 
 
 ### Arguments
-- `a::Array{Float64,1}`: a vector of length `m`.
-- `b::Array{Float64,1}`: a vector of length `n`.
+- `strings::Array{String,1}`: An array of strings to vectorize. These are the tokens in the record or document.
+- `size::Int64 = 1024`: The size of the vector to return.
+- `hash::Dict{String, Int64} = nothing`: A dictionary of tokens to use for vectorization.
 
-### Returns
-- `Y::Array{Float64,2}`: a matrix of size `m x n` such that `Y[i,j] = a[i]*b[j]`.
+### See also
+- Feature hashing: https://en.wikipedia.org/wiki/Feature_hashing
 """
-function ⊗(a::Array{Float64,1},b::Array{Float64,1})::Array{Float64,2}
+function hashing(strings::Array{String,1}; 
+    size::Int64 = 1024, hash::Dict{String,Int64} = nothing)::Array{Int64,1}
 
     # initialize -
-    m = length(a)
-    n = length(b)
-    Y = zeros(m,n)
+    result = Array{Int64,1}(undef, size);
+    fill!(result, 0); # initialize the result with 0s
 
-    # main loop 
-    for i ∈ 1:m
-        for j ∈ 1:n
-            Y[i,j] = a[i]*b[j]
+    # iterate through the strings, and compute the hash
+    frequency_dictionary = Dict{Int64, Int64}();
+    for string ∈ strings
+                
+        h = hash[string]; # returns the position of the string in the corpus
+        i = mod(h, size); # compute the index
+        
+        if (haskey(frequency_dictionary, i) == true)
+            frequency_dictionary[i] += 1; # increment the count
+        else
+            frequency_dictionary[i] = 1; # initialize the count
         end
     end
 
-    # return 
-    return Y
-end
-
-"""
-    encode(A::Array{Float64,2}, logic::Function) -> Array{Int64,2}
-
-Encode a matrix `A` using a logic function `logic` and returns a matrix of integers.
-
-### Arguments
-- `A::Array{Float64,2}`: a matrix of size `m x n`.
-- `logic::Function`: a function that takes a float and returns an integer.
-
-### Returns
-- `B::Array{Int64,2}`: a matrix of size `m x n` such that `B[i,j] = logic(A[i,j])`.
-"""
-function encode(A::Array{Float64,2}, logic::Function)::Array{Int64,2}
-
-    # initialize -
-    (m,n) = size(A)
-    B = zeros(Int64, m, n)
-
-    # main loop -
-    for i ∈ 1:m
-        for j ∈ 1:n
-            B[i,j] = logic(A[i,j])
-        end
+    # populate the result array -
+    kv = keys(frequency_dictionary) |> collect |> sort;
+    for k ∈ kv
+        result[k+1] = frequency_dictionary[k];
     end
 
-    # return -
-    return B
-end
-
-function errormodel(market_matrix::Array{Float64,2}, ticker_index::Int64, θᵢ::Array{Float64,1}, Rₘ::Array{Float64,1})::Distribution
-
-    # initialize -
-    number_of_trading_days = size(market_matrix, 2); # firm on rows, time on columns
-    Δᵢ = zeros(number_of_trading_days);
-
-    # compute the residuals -
-    for i ∈ 1:number_of_trading_days
-        Δᵢ[i] = market_matrix[ticker_index,i] - θᵢ[1] - θᵢ[2]*Rₘ[i];
-    end
-
-    # fit the residuals to a normal distribution -
-    d = fit_mle(Normal, Δᵢ);
-   
-    # return -
-    return d;
+    # return the result -
+    return result;
 end
 
 """
-    θ(data::Array{Float64,2}, firmindex::Int64, Rₘ::Array{Float64,1}; λ::Float64 = 0.0) -> Array{Float64,1}
+    partition(input::Array{T,2}, output::Vector{Y}; 
+        trainfraction::Float64) -> Tuple{Array{T,2}, Array{T,2}, Vector{Y}, Vector{Y}} where T <: Number where Y <: Number
 
-The `θ` function computes the expected parameters for the single index model.
+The `partition` function takes an input matrix and an output vector and randomly partitions the data into training and testing sets.
 
 ### Arguments
-- `data::Array{Float64,2}`: a matrix of size `m x n` where `m` is the number of firms and `n` is the number of trading days.
-- `firmindex::Int64`: an integer representing the index of the firm in the data matrix (row in the `data` matrix).
-- `Rₘ::Array{Float64,1}`: a vector of size `n` representing the excess return of the market variable
+- `input::Array{T,2}`: a matrix of size `m x n` where `m` is the number of rows and `n` is the number of features.
+- `output::Vector{Y}`: a vector of size `m` representing the output values.
+- `trainfraction::Float64`: a float representing the fraction of the data to use for training.
 
 ### Returns
-- `θ̂::Array{Float64,1}`: a vector of size `2` representing the expected parameters for the single index model (α, β).
-
-### Optional Arguments
-- `λ::Float64 = 0.0`: a float representing the regularization parameter (default is `0.0`).
+- `Tuple{Array{T,2}, Array{T,2}, Vector{Y}, Vector{Y}}`: a tuple of `(train_data, test_data, train_output, test_output)`.
 """
-function θ(data::Array{Float64,2}, firmindex::Int64, Rₘ::Array{Float64,1}; λ::Float64 = 0.0)::Array{Float64,1}
+function partition(input::Array{T,2}, output::Vector{Y}; 
+    trainfraction::Float64) where T <: Number where Y <: Number
 
-    # TODO: implement the regulatized least squares solution for the single index model
-    # TODO: this should implement the logic from the L10a lecture notes, using the direct linear algebra approach
+    # initialize -
+    (number_of_rows) = size(input,1);
 
-    # throw(ErrorException("Not yet implemented!"))
+    # compute the pivot: this is the number of training examples we'll have
+    pivot = round(trainfraction*number_of_rows) |> Int
 
-    # formulate the Y and X arrays with the price data -
-    Y = data[firmindex, :];
-    max_length = length(Y);
-    X = [ones(max_length) Rₘ];
-    IM = diagm(ones(2)); # we have two parameters -
-      
-    # compute θ̂ -
-    θ̂ = inv(transpose(X)*X+λ*IM)*transpose(X)*Y
-      
+    # generate a random set of training indexes -
+    training_index_set = Set{Int}();
+    while (length(training_index_set) <= pivot)
+        push!(training_index_set, rand(1:number_of_rows));
+    end
+
+    # compute how many rows we'll have in train, and test
+    training_index = collect(training_index_set);
+    test_index = setdiff(1:number_of_rows, training_index);
+    
+    # split -
+    train_data = input[training_index,:];
+    test_data = input[test_index,:];
+    train_output = output[training_index];
+    test_output = output[test_index];
+
     # return -
-    return θ̂;
+    return (train_data, test_data, train_output, test_output)
 end
