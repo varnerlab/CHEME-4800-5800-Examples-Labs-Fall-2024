@@ -44,7 +44,7 @@ mutable struct MyLinearProgrammingProblemModel <: AbstractLinearProgrammingProbl
     # data -
     A::Array{Float64,2}     # constraint matrix
     b::Array{Float64,1}     # right-hand side vector
-    c::Array{Float64,1}     # objective function coefficient vector
+    c::Union{Array{Float64,2}, Array{Float64,1}}     # objective function coefficient matrix (vector)
     lb::Array{Float64,1}    # lower bound vector
     ub::Array{Float64,1}    # upper bound vector
 
@@ -57,7 +57,7 @@ mutable struct MyLinearProgrammingDualProblemModel <: AbstractLinearProgrammingP
     # data -
     A::Array{Float64,2}     # constraint matrix
     b::Array{Float64,1}     # right-hand side vector
-    c::Array{Float64,1}     # objective function coefficient vector
+    c::Union{Array{Float64,2}, Array{Float64,1}}     # objective function coefficient matrix (vector)
     lb::Array{Float64,1}    # lower bound vector
     ub::Array{Float64,1}    # upper bound vector
 

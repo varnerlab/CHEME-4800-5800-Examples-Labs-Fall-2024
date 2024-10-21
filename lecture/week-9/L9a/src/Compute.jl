@@ -76,3 +76,70 @@ function _compute_stoichiometric_matrix(reactions::Dict{Int64, MyChemicalReactio
      # return -
      return (matrix, speciesnames, reactionnames);
 end
+
+"""
+    ⊗(a::Array{Float64,1},b::Array{Float64,1}) -> Array{Float64,2}
+
+Compute the outer product of two vectors `a` and `b` and returns a matrix.
+
+### Arguments
+- `a::Array{Float64,1}`: a vector of length `m`.
+- `b::Array{Float64,1}`: a vector of length `n`.
+
+### Returns
+- `Y::Array{Float64,2}`: a matrix of size `m x n` such that `Y[i,j] = a[i]*b[j]`.
+"""
+function ⊗(a::Array{Float64,1},b::Array{Float64,1})::Array{Float64,2}
+
+    # initialize -
+    m = length(a)
+    n = length(b)
+    Y = zeros(m,n)
+
+    # main loop 
+    for i ∈ 1:m
+        for j ∈ 1:n
+            Y[i,j] = a[i]*b[j]
+        end
+    end
+
+    # return 
+    return Y
+end
+
+function indifference(problem::MyLinearProgrammingProblemModel, U::Float64, xlim::Array{Float64,2})::Array{Float64,2}
+
+   
+    # Use the VLDecisionsPackage to compute the indifference curve -
+    model = VLDecisionsPackage.build(VLLinearUtilityFunction, (
+        α = problem.c,
+    ));
+    tmp = VLDecisionsPackage.indifference(model; utility = U, bounds = xlim, ϵ = 0.01);
+
+    # return array -
+    return tmp;
+end
+
+function budget(problem::MyLinearProgrammingProblemModel, xlim::Array{Float64,1}, total::Float64)::Array{Float64,2}
+
+    # initialize -
+    c = problem.c;
+    I = total;
+
+    # set values for the good and service 1
+    X1 = range(xlim[1], stop=xlim[2], step = 0.001) |> collect;
+    d = length(X1);
+
+    Y = Array{Float64,2}(undef,d,2);
+    for j ∈ 1:d
+
+        tmp = (1/c[2])*(I - c[1]*X1[j]);
+
+        Y[j,1] = X1[j];
+        Y[j,2] = tmp
+    end
+
+    # return -
+    return Y;
+end
+
