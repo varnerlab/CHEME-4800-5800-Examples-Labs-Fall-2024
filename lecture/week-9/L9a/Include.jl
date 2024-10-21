@@ -11,6 +11,8 @@ if (isfile(joinpath(_ROOT, "Manifest.toml")) == false) # have manifest file, we 
 end
 
 # load the required packages -
+using Plots
+using Colors
 using VLDecisionsPackage
 using GLPK
 using JuMP

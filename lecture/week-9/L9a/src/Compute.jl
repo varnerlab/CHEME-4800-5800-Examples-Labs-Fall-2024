@@ -107,14 +107,15 @@ function ⊗(a::Array{Float64,1},b::Array{Float64,1})::Array{Float64,2}
     return Y
 end
 
-function indifference(problem::MyLinearProgrammingProblemModel, U::Float64, xlim::Array{Float64,2})::Array{Float64,2}
+function indifference(problem::MyLinearProgrammingProblemModel, U::Float64, xlim::Array{Float64,2};
+    ϵ::Float64 = 0.01)::Array{Float64,2}
 
    
     # Use the VLDecisionsPackage to compute the indifference curve -
     model = VLDecisionsPackage.build(VLLinearUtilityFunction, (
         α = problem.c,
     ));
-    tmp = VLDecisionsPackage.indifference(model; utility = U, bounds = xlim, ϵ = 0.01);
+    tmp = VLDecisionsPackage.indifference(model; utility = U, bounds = xlim, ϵ = ϵ);
 
     # return array -
     return tmp;
@@ -123,7 +124,7 @@ end
 function budget(problem::MyLinearProgrammingProblemModel, xlim::Array{Float64,1}, total::Float64)::Array{Float64,2}
 
     # initialize -
-    c = problem.c;
+    c = problem.A;
     I = total;
 
     # set values for the good and service 1
