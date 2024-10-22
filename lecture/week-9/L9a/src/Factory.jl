@@ -49,6 +49,9 @@ function build(modeltype::Type{MyStoichiometricMatrixModel},
     return model;
 end
 
+"""
+Fill me in
+"""
 function build(modeltype::Type{T}, data::NamedTuple) where T <: AbstractLinearProgrammingProblemType
 
     # initialize -

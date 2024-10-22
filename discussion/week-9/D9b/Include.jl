@@ -5,8 +5,9 @@ const _PATH_TO_CONF = joinpath(_ROOT, "conf");
 const _PATH_TO_FIGS = joinpath(_ROOT, "figs");
 
 using Pkg;
-Pkg.add(path="https://github.com/varnerlab/VLDecisionsPackage.jl.git")
-Pkg.activate("."); Pkg.resolve(); Pkg.instantiate(); Pkg.update();
+if (isfile(joinpath(_ROOT, "Manifest.toml")) == false) # have manifest file, we are good. Otherwise, we need to instantiate the environment
+    Pkg.activate("."); Pkg.resolve(); Pkg.instantiate(); Pkg.update();
+end
 
 # load external packages -
 using LinearAlgebra

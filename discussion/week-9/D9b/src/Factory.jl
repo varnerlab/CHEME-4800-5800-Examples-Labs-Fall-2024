@@ -13,8 +13,7 @@ end
 """
     build(modeltype::Type{MySimpleLinearChoiceProblem}, data::NamedTuple) -> MySimpleLinearChoiceProblem
 """
-function build(modeltype::Type{MySimpleLinearChoiceProblem}, data::NamedTuple)::MySimpleLinearChoiceProblem
-    
+function build(modeltype::Type{T}, data::NamedTuple)::T where {T<:AbstractSimpleChoiceProblem}
     
     # initialize -
     model = modeltype()
@@ -28,4 +27,21 @@ function build(modeltype::Type{MySimpleLinearChoiceProblem}, data::NamedTuple)::
 
     # return -
     return model
+end
+
+
+function build(modeltype::Type{T}, data::NamedTuple) where T <: AbstractLinearProgrammingProblemType
+
+    # initialize -
+    model = modeltype(); # build an empty model 
+
+    # set the data -
+    model.A = data.A;
+    model.b = data.b;
+    model.c = data.c;
+    model.lb = data.lb;
+    model.ub = data.ub;
+
+    # return -
+    return model;
 end
