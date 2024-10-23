@@ -15,7 +15,7 @@ yield = "0.5"
 tau = "0.6226053639846744"
 beta = "0.05"
 death_rate_constant = "0.022"
-lambda = "0.0"
+lambda = "2.0"
 emax = "1.846153846153846"
 
 [lactose]
@@ -35,7 +35,7 @@ yield = "0.52"
 tau = "0.6226053639846744"
 beta = "0.05"
 death_rate_constant = "0.025"
-lambda = "2.0"
+lambda = "0.15"
 emax = "1.6223776223776223"
 
 [arabinose]
