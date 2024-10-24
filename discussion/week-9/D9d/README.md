@@ -1,8 +1,6 @@
 # Lab 9d: Linear Programming and the Assignment Problem
 An alien landed in my office, walked over to my desk and touched my face with it's strange bulbous glowing finger.
-I blacked out.
-
-When I came to, I opened my eyes to find an alien sitting at my desk, its large, luminescent eyes focused intently on my computer screen. The creature was a vivid shade of teal, with four long fingers dancing over the keyboard. Its antennae twitched as it navigated through lines of code, completely absorbed.
+I blacked out. When I came to, I opened my eyes to find an alien sitting at my desk, its large, luminescent eyes focused intently on my computer screen. The creature was a vivid shade of teal, with four long fingers dancing over the keyboard. Its antennae twitched as it navigated through lines of code, completely absorbed.
 
 I blinked in disbelief, still groggy. "What are you doing?", trying to make sense of the scene. The alien turned to me, its expression unreadable. "Optimizing maximum flow," it said in a voice that sounded like a chorus of chimes. "Your Earth problem requires efficiency." 
 
