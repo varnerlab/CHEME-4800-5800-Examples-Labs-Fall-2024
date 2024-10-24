@@ -4,7 +4,7 @@ I blacked out. When I came to, I opened my eyes to find an alien sitting at my d
 
 I blinked in disbelief, still groggy. "What are you doing?", trying to make sense of the scene. The alien turned to me, its expression unreadable. "Optimizing maximum flow," it said in a voice that sounded like a chorus of chimes. "Your Earth problem requires efficiency." 
 
-It finished this program and handed it to me. "You will need this," it said, before vanishing in a flash of light.
+It finished the program and handed it to me. "You will need this," it said, before vanishing in a flash of light.
 
 ## Tasks
 The program appears to be some type of linear programming code to solve the assignment problem. Break into teams and analyze the alien program and its associated data to figure out what the assignment problem is, how the program is solving it, and what the optimal solution is.
