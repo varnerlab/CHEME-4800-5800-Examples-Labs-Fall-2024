@@ -1,15 +1,17 @@
-"""
-    solve(problem::MySimpleLinearChoiceProblem) -> Dict{String,Any}
 
-Solves a constrained uility maximization problem with linear utility function and linear budget constraint.
+"""
+    solve(problem::MyLinearProgrammingProblemModel) -> Dict{String,Any}
+
+Solves a linear programming problem. This function uses the GLPK optimizer to solve the problem, 
+and returns the optimal choice and the value of the objective function at the optimal choice.
+This function throws an AssertionError if the optimization is not successful.
 
 ### Arguments
-- problem::MySimpleLinearChoiceProblem: An instance of MySimpleLinearChoiceProblem holding the data for the problem.
+- problem::MyLinearProgrammingProblemModel: An instance of MyLinearProgrammingProblemModel holding the data for the problem.
 
 ### Returns
 - Dict{String,Any}: A dictionary with the following keys:
     - "argmax": The optimal choice.
-    - "budget": The budget at the optimal choice.
     - "objective_value": The value of the objective function at the optimal choice.
 """
 function solve(problem::MyLinearProgrammingProblemModel)::Dict{String,Any}
@@ -53,17 +55,19 @@ function solve(problem::MyLinearProgrammingProblemModel)::Dict{String,Any}
 end
 
 """
-    solve(problem::MySimpleLinearChoiceProblem) -> Dict{String,Any}
+    solve(problem::MyLinearProgrammingDualProblemModel) -> Dict{String,Any}
 
-Solves a constrained uility maximization problem with linear utility function and linear budget constraint.
+
+Solves the dual linear programming problem. This function uses the GLPK optimizer to solve the problem, 
+and returns the optimal choice and the value of the objective function at the optimal choice.
+This function throws an AssertionError if the optimization is not successful.
 
 ### Arguments
-- problem::MySimpleLinearChoiceProblem: An instance of MySimpleLinearChoiceProblem holding the data for the problem.
+- problem::MyLinearProgrammingDualProblemModel: An instance of MyLinearProgrammingDualProblemModel holding the data for the problem.
 
 ### Returns
 - Dict{String,Any}: A dictionary with the following keys:
-    - "argmax": The optimal choice.
-    - "budget": The budget at the optimal choice.
+    - "argmin": The optimal choice.
     - "objective_value": The value of the objective function at the optimal choice.
 """
 function solve(problem::MyLinearProgrammingDualProblemModel)::Dict{String,Any}

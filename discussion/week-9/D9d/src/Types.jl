@@ -113,7 +113,7 @@ The struct represents a simple directed graph model.
 - `edgesinverse::Dict{Int, Tuple{Int, Int}}`: a map between edge id and source and target.
 - `children::Union{Nothing, Dict{Int64, Set{Int64}}}`: a dictionary of children nodes. Keys are node ids, and values are sets of children node ids.
 - `A::Array{Float64,2}`: the system constraint matrix for flow optimization. Rows are nodes, and columns are edges.
-
+- `b::Array{Float64,1}`: the right-hand side vector.
 """
 mutable struct MySimpleDirectedGraphModel <: MyAbstractGraphModel
     

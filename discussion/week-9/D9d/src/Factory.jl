@@ -46,6 +46,18 @@ function build(modeltype::Type{T}, data::NamedTuple) where T <: AbstractLinearPr
     return model;
 end
 
+"""
+    function build(model::Type{T}, edgemodels::Dict{Int64, MyGraphEdgeModel}) where T <: MyAbstractGraphModel
+
+This function builds a graph model of type T from the edge models in the dictionary edgemodels.
+
+### Arguments
+- model::Type{T}: The type of the model to build.
+- edgemodels::Dict{Int64, MyGraphEdgeModel}: A dictionary of edge models.
+
+### Returns
+- T: An instance of the model type `T` which is a subtype of `MyAbstractGraphModel. 
+"""
 function build(model::Type{T}, edgemodels::Dict{Int64, MyGraphEdgeModel}) where T <: MyAbstractGraphModel
 
     # build and empty graph model -
