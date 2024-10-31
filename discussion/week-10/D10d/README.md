@@ -1,1 +1,1 @@
-# CHEME-5760-PS1-OptimalMacProRackDesign-Fall-2023
+See the student and solution notebooks
