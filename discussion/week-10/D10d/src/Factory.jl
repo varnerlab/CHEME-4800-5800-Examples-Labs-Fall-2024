@@ -24,4 +24,5 @@ function _build(modeltype::Type{T}, data::NamedTuple) where T <: Union{AbstractS
     return model
 end
 
-build(model::Type{MySimpleBinaryVariableLinearChoiceProblem}, data::NamedTuple)::MySimpleBinaryVariableLinearChoiceProblem = _build(model, data);
+build(model::Type{MySimpleBinaryVariableLinearChoiceProblem}, 
+    data::NamedTuple)::MySimpleBinaryVariableLinearChoiceProblem = _build(model, data);
