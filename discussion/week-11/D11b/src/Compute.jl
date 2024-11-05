@@ -1,7 +1,18 @@
 """
+    transitionmatrix(vocabmodel::MyEnglishLanguageVocubularyModel, 
+        letters::Array{Char,1}) -> Array{Float64,2}
+
+This function computes the transition matrix for {a,b,c,...,z} given the vocabulary model and the letters.
+
+### Arguments
+- `vocabmodel::MyEnglishLanguageVocubularyModel`: This is the vocabulary model that we have created.
+- `letters::Array{Char,1}`: This is the array of characters that we are interested in.
+
+### Returns
+- `Array{Float64,2}`: This returns back the transition matrix.
 """
 function transitionmatrix(vocabmodel::MyEnglishLanguageVocubularyModel, 
-    letters::Array{Char,1})
+    letters::Array{Char,1})::Array{Float64,2}
 
     # initialize -
     number_of_letters = 26;
@@ -42,6 +53,22 @@ function transitionmatrix(vocabmodel::MyEnglishLanguageVocubularyModel,
     return P;
 end
 
+"""
+    samples(P::Array{Float64,2}, letters::Array{Char,1};
+        number_of_samples::Int64 = 100, length_of_sample_word::Int64 = 4, startchar::Char = 'z') -> Dict{Int64,String}
+
+This function generates sample words of a specified length from the transition matrix P given the letters.
+
+### Arguments
+- `P::Array{Float64,2}`: This is the transition matrix.
+- `letters::Array{Char,1}`: This is the array of characters that we are interested in.
+- `number_of_samples::Int64`: This is the number of samples that we want to generate.
+- `length_of_sample_word::Int64`: This is the length of the sample word that we want to generate.
+- `startchar::Char`: This is the starting character of the sample word.
+
+### Returns
+- `Dict{Int64,String}`: This returns back a dictionary of sample words. The key is the index of the sample word and the value is the sample word.
+"""
 function samples(P::Array{Float64,2}, letters::Array{Char,1};
     number_of_samples::Int64 = 100, length_of_sample_word::Int64 = 4, 
     startchar::Char = 'z')::Dict{Int64,String}
