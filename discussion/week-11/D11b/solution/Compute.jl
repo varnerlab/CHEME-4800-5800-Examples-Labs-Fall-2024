@@ -21,8 +21,33 @@ function transitionmatrix(vocabmodel::MyEnglishLanguageVocubularyModel,
     fill!(P, 0.0); # initialy all the elements are zero
     fill!(counts,0.0); # initially counts has all zeros
 
-    # TODO: code to implement the transition matrix
-    throw("The transitionmatrix(...) function is not implemented yet!");
+    # process each letter
+    for i ∈ eachindex(letters)
+        startchar = letters[i];
+        
+        # get all the words that start with the startchar -
+        set_of_words = vocabmodel.wordsdictionary[startchar] |> copy; # copy the set
+        N = 0; # how many words have we processed?
+        while (isempty(set_of_words) == false)
+            word = pop!(set_of_words); # grab a word
+            
+            # get the second char of word -
+            if (length(word) ≥ 2)
+                next_char = word[2]; # get the second character in the word
+                j = findfirst(x-> x == next_char, letters); # this gives me the index of the next_char
+                counts[j] = counts[j] + 1;
+                N += 1; # update the count of word samples that we explored
+            end
+        end
+        
+        # fill in the P -
+        for k ∈ 1:number_of_letters
+            P[i,k] = counts[k]/N;
+        end
+
+        # empty counts -
+        fill!(counts,0.0); # fill it back up with zeros
+    end
 
     # return the transition matrix -
     return P;
