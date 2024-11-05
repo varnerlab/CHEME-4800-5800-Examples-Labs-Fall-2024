@@ -25,7 +25,7 @@ We downloaded a JSON file containing approximately 370K English words from [here
 
 * We already implemented the code to read the words from the `JSON` file and to build an instance of the `MyEnglishLanguageVocubularyModel` struct. Furthermore, we have implemented the `samples(...)` function, which generates a set of random words of a given length from $\mathbf{P}$. However, the `transitionmatrix(...)` function (which constructs $\mathbf{P}$) has not been implemented.
 
-* Using the `MyEnglishLanguageVocubularyModel` instance, implement the `transitionmatrix(...)` function in `src/Compute.jl`. This function generates the Markov model's transition matrix $\mathbf{P}$. Assume the states are the characters in the words. Thus, the transition matrix will be a $26\times{26}$ matrix where $p_{ij}\in\mathbf{P}$ is the probability of moving from character $i$ to character $j$. Let's compute $p_{ij}$ using the first two characters of each word to make our lives easier. 
+* __Duratrion: 30 min__: Using the `MyEnglishLanguageVocubularyModel` instance, implement the `transitionmatrix(...)` function in `src/Compute.jl`. This function generates the Markov model's transition matrix $\mathbf{P}$. Assume the states are the characters in the words. Thus, the transition matrix will be a $26\times{26}$ matrix where $p_{ij}\in\mathbf{P}$ is the probability of moving from character $i$ to character $j$. Let's compute $p_{ij}$ using the first two characters of each word to make our lives easier. 
 
 Test your `transitionmatrix(...)` implementation by executing the `runme.jl` script from the terminal:
 ```julia
