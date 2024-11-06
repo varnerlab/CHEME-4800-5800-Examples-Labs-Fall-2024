@@ -18,7 +18,7 @@ function transitionmatrix(vocabmodel::MyEnglishLanguageVocubularyModel,
     number_of_letters = 26;
     counts = Array{Int64,1}(undef, number_of_letters);
     P = Array{Float64, 2}(undef, number_of_letters, number_of_letters);
-    fill!(P, 0.0); # initialy all the elements are zero
+    fill!(P, 0.0); # initially all the elements are zero
     fill!(counts,0.0); # initially counts has all zeros
 
     # TODO: code to implement the transition matrix
