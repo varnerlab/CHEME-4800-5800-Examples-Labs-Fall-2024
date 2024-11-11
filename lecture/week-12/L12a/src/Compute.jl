@@ -1,4 +1,19 @@
-function lookahead(p::MyMDPProblemModel, U::Vector{Float64}, s::Int64, a::Int64)
+"""
+    lookahead(p::MyMDPProblemModel, U::Vector{Float64}, s::Int64, a::Int64)
+
+This function computes the lookahead value for a given state-action pair `(s,a)`. 
+It uses a vector `U` to compute the value function.
+
+### Arguments
+- `p::MyMDPProblemModel`: the MDP problem model
+- `U::Vector{Float64}`: the value function vector
+- `s::Int64`: the state
+- `a::Int64`: the action
+
+### Returns
+- `Float64`: the lookahead value for the state-action pair `(s,a)`. 
+"""
+function lookahead(p::MyMDPProblemModel, U::Vector{Float64}, s::Int64, a::Int64)::Float64
 
     # grab stuff from the problem -
     R = p.R;  # reward -
@@ -6,10 +21,16 @@ function lookahead(p::MyMDPProblemModel, U::Vector{Float64}, s::Int64, a::Int64)
     γ = p.γ;
     𝒮 = p.𝒮;
     
-    # setup my state array -
+    # compute the lookahead value and return it
     return R[s,a] + γ*sum(T[s,s′,a]*U[i] for (i,s′) in enumerate(𝒮))
 end
 
+"""
+    lookahead(p::MyMDPProblemModel, U::Function, s::Int64, a::Int64)::Float64
+
+This function computes the lookahead value for a given state-action pair `(s,a)`. 
+It uses a function `U` to compute the value function.
+"""
 function lookahead(p::MyMDPProblemModel, U::Function, s::Int64, a::Int64)
 
     # get data from the problem -
@@ -18,68 +39,18 @@ function lookahead(p::MyMDPProblemModel, U::Function, s::Int64, a::Int64)
 end
 
 
-function myrandpolicy(problem::MyMDPProblemModel, 
-    world::MyRectangularGridWorldModel, s::Int)::Int
+"""
+    Q(p::MyMDPProblemModel, U::Array{Float64,1}) -> Array{Float64,2}
 
-    # initialize -
-    d = Categorical([0.25,0.25,0.25,0.25]); # you specify this
+This function computes the Q-value function for a given value function `U`.
 
-    # should keep chooseing -
-    should_choose_gain = true;
-    a = -1; # default
-    while (should_choose_gain == true)
-    
-        # initialize a random categorical distribution over actions -
-        aᵢ = rand(d);
-        
-        # get the move, and the current location -
-        Δ = world.moves[aᵢ];
-        current_position = world.coordinates[s]
-        new_position =  current_position .+ Δ
-        if (haskey(world.states, new_position) == true)
-            a = aᵢ
-            should_choose_gain = false;
-        end
-    end
+### Arguments
+- `p::MyMDPProblemModel`: the MDP problem model
+- `U::Array{Float64,1}`: the value function vector
 
-    return a;
-end;
-
-function myrandstep(problem::MyMDPProblemModel, 
-    world::MyRectangularGridWorldModel, s::Int, a::Int)
-
-    # get the reward value -
-    r = problem.R[s,a];
-
-    # get the move, and the current location -
-    Δ = world.moves[a];
-    current_position = world.coordinates[s]
-
-    # propose a new position -
-    new_position =  current_position .+ Δ
-    s′ = s; # default, we don't do anything
-    if (haskey(world.states, new_position) == true)
-        s′ = world.states[new_position];
-    end
-
-    # return -
-    return (s′,r)
-end;
-
-function myrollout(problem::MyMDPProblemModel, 
-    world::MyRectangularGridWorldModel, s::Int64, depth::Int64)::Float64
-
-    # initialize -
-    ret = 0.0;
-    for i ∈ 1:depth
-        s, r = myrandpolicy(problem, world, s) |> a -> myrandstep(problem, world, s, a);
-        ret += problem.γ^(i-1)*r;
-    end
-    
-    # return -
-    return ret;
-end;
-
+### Returns
+- `Array{Float64,2}`: the Q-value function
+"""
 function Q(p::MyMDPProblemModel, U::Array{Float64,1})::Array{Float64,2}
 
     # grab stuff from the problem -
@@ -92,15 +63,34 @@ function Q(p::MyMDPProblemModel, U::Array{Float64,1})::Array{Float64,2}
     # initialize -
     Q_array = Array{Float64,2}(undef, length(𝒮), length(𝒜))
 
-    for s ∈ 1:length(𝒮)
-        for a ∈ 1:length(𝒜)
+    # compute the Q-value function -
+    for i ∈ eachindex(𝒮)
+        s = 𝒮[i]; # get the state s
+        for j ∈ eachindex(𝒜)
+            a = 𝒜[j]; # get the action a
+
+            # compute the Q-value -
+            # We get the reward for being in state s and taking action a, 
+            # and then we add the discounted sum of the future value function for the next state s′.
             Q_array[s,a] = R[s,a] + γ*sum([T[s,s′,a]*U[s′] for s′ in 𝒮]);
         end
     end
 
+    # return -
     return Q_array
 end
 
+"""
+    policy(Q_array::Array{Float64,2}) -> Array{Int,1}
+
+This function computes the policy from the Q-value function.
+
+### Arguments
+- `Q_array::Array{Float64,2}`: the Q-value function
+
+### Returns
+- `Array{Int,1}`: the policy which maps states to actions
+"""
 function policy(Q_array::Array{Float64,2})::Array{Int64,1}
 
     # get the dimension -
@@ -116,10 +106,28 @@ function policy(Q_array::Array{Float64,2})::Array{Int64,1}
     return π_array;
 end
 
-function backup(problem::MyMDPProblemModel, U::Array{Float64,1}, s::Int64)
+"""
+    backup(problem::MyMDPProblemModel, U::Array{Float64,1}, s::Int64) -> Float64
+
+This function computes the backup value for a given state `s` and value function `U`.
+
+### Arguments
+- `problem::MyMDPProblemModel`: the MDP problem model
+- `U::Array{Float64,1}`: the value function vector
+- `s::Int64`: the state
+
+### Returns
+- `Float64`: the best backup value for the state `s`
+"""
+function backup(problem::MyMDPProblemModel, U::Array{Float64,1}, s::Int64)::Float64
     return maximum(lookahead(problem, U, s, a) for a ∈ problem.𝒜);
 end
 
+"""
+    solve(model::MyValueIterationModel, problem::MyMDPProblemModel) -> MyValueFunctionPolicy
+
+This function solves the MDP problem using value iteration.
+"""
 function solve(model::MyValueIterationModel, problem::MyMDPProblemModel)::MyValueFunctionPolicy
     
     # data -

@@ -1,3 +1,22 @@
+"""
+    build(model::Type{MyMDPProblemModel}, data::NamedTuple) -> MyMDPProblemModel
+
+Builds a `MyMDPProblemModel` from a `NamedTuple`.
+
+### Arguments
+- `model::Type{MyMDPProblemModel}`: the model type to build
+- `data::NamedTuple`: the data to use to build the model
+
+The `data` `NamedTuple` must contain the following keys:
+- `𝒮::Array{Int64,1}`: state space
+- `𝒜::Array{Int64,1}`: action space
+- `T::Union{Function, Array{Float64,3}}`: transition matrix of function
+- `R::Union{Function, Array{Float64,2}}`: reward matrix or function
+- `γ::Float64`: discount factor
+
+### Returns
+- `MyMDPProblemModel`: the built MDP problem model
+"""
 function build(model::Type{MyMDPProblemModel}, data::NamedTuple)::MyMDPProblemModel
     
     # build an empty model -
@@ -14,6 +33,24 @@ function build(model::Type{MyMDPProblemModel}, data::NamedTuple)::MyMDPProblemMo
     return m;
 end
 
+"""
+    build(modeltype::Type{MyRectangularGridWorldModel}, data::NamedTuple) -> MyRectangularGridWorldModel
+
+Builds a `MyRectangularGridWorldModel` from data in a `NamedTuple`.
+
+### Arguments
+- `modeltype::Type{MyRectangularGridWorldModel}`: the model type to build
+- `data::NamedTuple`: the data to use to build the model
+
+The `data` `NamedTuple` must contain the following keys:
+- `nrows::Int`: number of rows in the grid
+- `ncols::Int`: number of columns in the grid
+- `rewards::Dict{Tuple{Int,Int},Float64}`: dictionary of state to reward mapping
+- `defaultreward::Float64`: default reward value (optional)
+
+### Returns
+- `MyRectangularGridWorldModel`: a populated rectangular grid world model
+"""
 function build(modeltype::Type{MyRectangularGridWorldModel}, data::NamedTuple)::MyRectangularGridWorldModel
 
     # initialize and empty model -
