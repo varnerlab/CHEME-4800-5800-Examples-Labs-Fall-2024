@@ -102,7 +102,7 @@ function sample(model::EpsilonSamplingModel;  𝒯::Int64 = 0, world::Function =
         end
 
 
-        aₜ = 1; # default to 1
+        aₜ = nothing; # default to 1
         if (rand() < ϵ)
             aₜ = rand(dcat);
         else
