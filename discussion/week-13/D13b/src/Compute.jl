@@ -3,7 +3,7 @@
 _null(action::Int64)::Int64 = return 0;
 
 
-function _world(model::MyRectangularGridWorldModel, s::Int, a::Int)::Float64
+function _world(model::MyRectangularGridWorldModel, s::Int, a::Int)::Tuple{Int64, Float64}
 
     # initialize -
     s′ = nothing
@@ -64,13 +64,15 @@ end
 # PUBLIC METHODS BELOW HERE ================================================================================== #``
 # Cool hack: What is going on with these?
 (model::MyQLearningAgentModel)(data::NamedTuple) = _update(model, data);
+(world::MyRectangularGridWorldModel)(s::Int, a::Int) = _world(world, s, a);
+
 
 """
     simulate(model::MyQLearningModel, environment::T, startstate::Int, maxsteps::Int;
         ϵ::Float64 = 0.2) -> MyQLearningModel where T <: AbstractWorldModel
 """
-function simulate(agent::MyQLearningAgentModel, environment::Function, startstate::Tuple{Int,Int}, maxsteps::Int;
-    ϵ::Float64 = 0.2)::MyQLearningAgentModel
+function simulate(agent::MyQLearningAgentModel, environment::MyRectangularGridWorldModel, 
+    startstate::Tuple{Int,Int}, maxsteps::Int; ϵ::Float64 = 0.2)::MyQLearningAgentModel
 
     # initialize -
     s = environment.states[startstate]
@@ -99,7 +101,7 @@ function simulate(agent::MyQLearningAgentModel, environment::Function, startstat
         if (haskey(environment.states, new_position) == true)
 
             # ask the world, what is my next state and reward from this (s,a)
-            r = environment(s,a)
+            s′,r = environment(s,a)
         else
             s′ = s;
             r = -1000000000000.0;
