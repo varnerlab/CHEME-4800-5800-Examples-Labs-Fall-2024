@@ -1,5 +1,14 @@
 """
     build(type::Type{MyQLearningModel},data::NamedTuple) -> MyQLearningModel
+
+This function builds a `MyQLearningModel` object using the data in the `NamedTuple` argument.
+
+### Arguments
+- `type::Type{MyQLearningModel}`: The type of the model to build
+- `data::NamedTuple`: The data to use to build the model
+
+### Returns
+- `MyQLearningModel`: The built model
 """
 function build(modeltype::Type{MyQLearningAgentModel}, data::NamedTuple)::MyQLearningAgentModel
 
@@ -45,7 +54,7 @@ The `NamedTuple` object must have the following fields:
 function build(modeltype::Type{MyRectangularGridWorldModel}, data::NamedTuple)::MyRectangularGridWorldModel
 
     # initialize and empty model -
-    model = MyRectangularGridWorldModel()
+    model = modeltype()
 
     # get the data -
     nrows = data[:nrows]

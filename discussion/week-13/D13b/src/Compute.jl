@@ -70,6 +70,18 @@ end
 """
     simulate(model::MyQLearningModel, environment::T, startstate::Int, maxsteps::Int;
         ϵ::Float64 = 0.2) -> MyQLearningModel where T <: AbstractWorldModel
+
+Simulate the agent in the environment for a number of steps. The agent will use the ϵ-greedy policy to select actions.
+
+### Arguments
+- `model::MyQLearningModel`: The agent model.
+- `environment::T`: The environment model
+- `startstate::Int`: The starting state
+- `maxsteps::Int`: The maximum number of steps to simulate (number of updates to the agent model)
+- `ϵ::Float64 = 0.2`: The probability of selecting a random action (exploration rate)
+
+### Returns
+- `MyQLearningModel`: The updated agent model
 """
 function simulate(agent::MyQLearningAgentModel, environment::MyRectangularGridWorldModel, 
     startstate::Tuple{Int,Int}, maxsteps::Int; ϵ::Float64 = 0.2)::MyQLearningAgentModel
@@ -120,6 +132,17 @@ function simulate(agent::MyQLearningAgentModel, environment::MyRectangularGridWo
     return agent
 end
 
+"""
+    policy(Q_array::Array{Float64,2}) -> Array{Int64,1}
+
+Given a Q-array, return the policy that maximizes the Q-values for each state.
+
+### Arguments
+- `Q_array::Array{Float64,2}`: The Q-array
+
+### Returns
+- `Array{Int64,1}`: The policy array
+"""
 function policy(Q_array::Array{Float64,2})::Array{Int64,1}
 
     # get the dimension -
