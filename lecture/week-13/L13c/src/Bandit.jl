@@ -1,3 +1,16 @@
+"""
+    sample(model::ThompsonSamplingModel; 𝒯::Int64 = 0, world::Function = _null) -> Dict{Int64, Array{Float64,2}}
+
+Sample from the Thompson Sampling model.
+
+### Arguments
+- `model::ThompsonSamplingModel`: The sampling model
+- `𝒯::Int64`: The horizon of the game
+- `world::Function`: The world function
+
+### Returns
+- `Dict{Int64, Array{Float64,2}}`: A dictionary that maps time to the (α,β) parameters for each action
+"""
 function sample(model::ThompsonSamplingModel; 𝒯::Int64 = 0, world::Function = _null)::Dict{Int64, Array{Float64,2}}
 
     # initialize -
@@ -60,6 +73,19 @@ function sample(model::ThompsonSamplingModel; 𝒯::Int64 = 0, world::Function =
     return time_sample_results_dict;
 end 
 
+"""
+    sample(model::EpsilonSamplingModel; 𝒯::Int64 = 0, world::Function = _null) -> Dict{Int64, Array{Float64,2}}
+
+Sample from the Epsilon-Greedy Sampling model.
+
+### Arguments
+- `model::EpsilonSamplingModel`: The sampling model
+- `𝒯::Int64`: The number of time steps to sample
+- `world::Function`: The world function
+
+### Returns
+- `Dict{Int64, Array{Float64,2}}`: A dictionary that maps time to the (α,β) parameters for each action
+"""
 function sample(model::EpsilonSamplingModel;  𝒯::Int64 = 0, world::Function = _null)::Dict{Int64, Array{Float64,2}}
 
     # initialize -
@@ -140,6 +166,17 @@ function sample(model::EpsilonSamplingModel;  𝒯::Int64 = 0, world::Function =
     return time_sample_results_dict;
 end
 
+"""
+    build_beta_array(parameters::Array{Float64,2}) -> Array{Beta,1}
+
+Build an array of Beta distributions from the (α,β) parameter array.
+
+### Arguments
+- `parameters::Array{Float64,2}`: The (α,β) parameter array. Alpha is the first column, Beta is the second column. Rows are the actions.
+
+### Returns
+- `Array{Beta,1}`: An array of Beta distributions
+"""
 function build_beta_array(parameters::Array{Float64,2})::Array{Beta,1}
 
     # build an array of beta distributions -

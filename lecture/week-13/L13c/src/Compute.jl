@@ -3,7 +3,7 @@
 _null(action::Int64)::Int64 = return 0;
 
 
-function _world(model::MyRectangularGridWorldModel, s::Int, a::Int)::Float64
+function _world(model::MyRectangularGridWorldModel, s::Int, a::Int)::Tuple{Int64, Float64}
 
     # initialize -
     s′ = nothing
@@ -64,13 +64,27 @@ end
 # PUBLIC METHODS BELOW HERE ================================================================================== #``
 # Cool hack: What is going on with these?
 (model::MyQLearningAgentModel)(data::NamedTuple) = _update(model, data);
+(world::MyRectangularGridWorldModel)(s::Int, a::Int) = _world(world, s, a);
+
 
 """
     simulate(model::MyQLearningModel, environment::T, startstate::Int, maxsteps::Int;
         ϵ::Float64 = 0.2) -> MyQLearningModel where T <: AbstractWorldModel
+
+Simulate the agent in the environment for a number of steps. The agent will use the ϵ-greedy policy to select actions.
+
+### Arguments
+- `model::MyQLearningModel`: The agent model.
+- `environment::T`: The environment model
+- `startstate::Int`: The starting state
+- `maxsteps::Int`: The maximum number of steps to simulate (number of updates to the agent model)
+- `ϵ::Float64 = 0.2`: The probability of selecting a random action (exploration rate)
+
+### Returns
+- `MyQLearningModel`: The updated agent model
 """
-function simulate(agent::MyQLearningAgentModel, environment::Function, startstate::Tuple{Int,Int}, maxsteps::Int;
-    ϵ::Float64 = 0.2)::MyQLearningAgentModel
+function simulate(agent::MyQLearningAgentModel, environment::MyRectangularGridWorldModel, 
+    startstate::Tuple{Int,Int}, maxsteps::Int; ϵ::Float64 = 0.2)::MyQLearningAgentModel
 
     # initialize -
     s = environment.states[startstate]
@@ -99,7 +113,7 @@ function simulate(agent::MyQLearningAgentModel, environment::Function, startstat
         if (haskey(environment.states, new_position) == true)
 
             # ask the world, what is my next state and reward from this (s,a)
-            r = environment(s,a)
+            s′,r = environment(s,a)
         else
             s′ = s;
             r = -1000000000000.0;
@@ -118,6 +132,17 @@ function simulate(agent::MyQLearningAgentModel, environment::Function, startstat
     return agent
 end
 
+"""
+    policy(Q_array::Array{Float64,2}) -> Array{Int64,1}
+
+Given a Q-array, return the policy that maximizes the Q-values for each state.
+
+### Arguments
+- `Q_array::Array{Float64,2}`: The Q-array
+
+### Returns
+- `Array{Int64,1}`: The policy array
+"""
 function policy(Q_array::Array{Float64,2})::Array{Int64,1}
 
     # get the dimension -
@@ -132,4 +157,17 @@ function policy(Q_array::Array{Float64,2})::Array{Int64,1}
     # return -
     return π_array;
 end
+
+function U(x::Tuple{Int,Int}, α::Array{Float64,1})::Float64
+    
+    # get the apples, and oranges 
+    apples = x[1];
+    oranges = x[2];
+    
+    # compute the objective -
+    utility = (apples^α[1])*(oranges^α[2]);
+    
+    # return -
+    return utility;
+end;
 # PUBLIC METHODS ABOVE HERE ================================================================================== #
