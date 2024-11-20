@@ -16,14 +16,20 @@ let
         a = my_π[s];
         Δ = world.moves[a];
         new_position =  current_position .+ Δ
-        scatter!([current_position[1]],[current_position[2]], label="", showaxis=:false, msc=:black, c=:blue)
+
+        scatter!([current_position[1]],[current_position[2]], label="", showaxis=:false, msc=:black, c=:red)
         plot!([current_position[1], new_position[1]],[current_position[2], new_position[2]], label="", arrow=true, lw=1, c=:red)
         
         if (in(new_position, absorbing_state_set) == true || in(new_position, visited_sites) == true)
             hit_absorbing_state = true;
         else
-            s = world.states[new_position];
-            push!(visited_sites, new_position);
+            
+            if (in(new_position, keys(world_model.states)) == false)
+                hit_absorbing_state = true;
+            else
+                s = world.states[new_position];
+                push!(visited_sites, new_position);
+            end
         end
     end
     
@@ -36,7 +42,7 @@ let
 
         if (in(current_position, soft_wall_set) == true)
             scatter!([current_position[1]],[current_position[2]], label="", showaxis=:false, c=:gray69, ms=4)
-        else
+        elseif (in(new_position, keys(world_model.states)) == true)
             scatter!([current_position[1]],[current_position[2]], label="", showaxis=:false, msc=:gray50, c=:white)
         end
     end

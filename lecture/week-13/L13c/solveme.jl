@@ -1,7 +1,7 @@
 include("problemsetup.jl");
 
 # -- STEP 2: Solve the problem BELOW ------------------------------------------------------------------------------------ #
-startstate = (1,1); # start position
+startstate = (30,1); # start position
 number_of_episodes = 200; # how many times do we repeat the task?
 number_of_iterations = 1000; # problem horizon (how many moves)
 

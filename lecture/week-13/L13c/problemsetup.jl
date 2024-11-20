@@ -22,7 +22,8 @@ rewards = Dict{Tuple{Int,Int}, Float64}();
 for apples ∈ 1:number_of_rows
     for oranges ∈ 1:number_of_columns
         how_much_did_we_spend = c[1]*apples + c[2]*oranges;
-        rewards[(apples,oranges)] = U((apples,oranges), α) + budget_penalty*max(0.0, how_much_did_we_spend - total_budget);
+        rewards[(apples,oranges)] = U((apples,oranges), α) + 
+            budget_penalty*max(0.0, how_much_did_we_spend - total_budget);
     end
 end
 
@@ -33,7 +34,8 @@ world_model = build(MyRectangularGridWorldModel, (
 # setup up the agent -
 agent_model = let
     
-    α = 0.7;  # learning rate
+    # α = 0.7;  # learning rate
+    α = 0.0;  # learning rate - not learning
     γ = 0.95; # discount rate
     nstates = (number_of_rows*number_of_columns);
 
