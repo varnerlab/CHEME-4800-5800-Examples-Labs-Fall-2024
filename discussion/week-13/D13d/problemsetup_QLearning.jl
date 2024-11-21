@@ -35,7 +35,6 @@ world_model = build(MyRectangularGridWorldModel, (
 agent_model = let
     
     α = 0.7;  # learning rate
-    # α = 0.0;  # learning rate - not learning
     γ = 0.95; # discount rate
     nstates = (number_of_rows*number_of_columns);
 
