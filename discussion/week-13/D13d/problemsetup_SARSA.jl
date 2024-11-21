@@ -32,10 +32,10 @@ world_model = build(MyRectangularGridWorldModel, (
     nrows=number_of_rows, ncols=number_of_columns, rewards = myrewards, defaultreward = 0.0));
 
 # setup up the agent -
-agent_model = let
+agent_model_SARSA = let
     
     α = 0.7;  # learning rate
-    γ = 0.90; # discount rate
+    γ = 0.95; # discount rate
     nstates = (number_of_rows*number_of_columns);
     Q = zeros(number_of_states,number_of_actions) # Hmmm. Could we do something better than this?
 

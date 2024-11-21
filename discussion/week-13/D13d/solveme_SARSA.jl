@@ -12,13 +12,13 @@ my_π = let
     for i ∈ 1:number_of_episodes
         
         # run an episode, and grab the Q
-        result = simulate(agent_model, world_model, coordinate, number_of_iterations, 
+        result = simulate(agent_model_SARSA, world_model, coordinate, number_of_iterations, 
             ϵ = 0.6);
     
         # update the agent with the Q from the last episode, and try to refine this Q
-        agent_model.Q = result.Q;  # Analogy: practice make perfect ...
-        agent_model.my_π = policy(agent_model.Q); # update the policy
+        agent_model_SARSA.Q = result.Q;  # Analogy: practice make perfect ...
+        agent_model_SARSA.my_π = policy(agent_model_SARSA.Q); # update the policy
     end
-    my_π = agent_model.my_π; # return the policy
+    my_π = agent_model_SARSA.my_π; # return the policy
 end;
 # -- STEP 2: Solve the problem ABOVE ------------------------------------------------------------------------------------ #
