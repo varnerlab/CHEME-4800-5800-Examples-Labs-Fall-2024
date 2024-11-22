@@ -71,6 +71,20 @@ mutable struct MyQLearningAgentModel <: AbstractLearningModel
     MyQLearningAgentModel() = new();
 end
 
+"""
+    MySARSAAgentModel <: AbstractLearningModel
+
+A mutable struct that represents a SARSA agent.
+
+### Fields
+- `states::Array{Int,1}`: The states
+- `actions::Array{Int,1}`: The actions
+- `γ::Float64`: The discount factor
+- `α::Float64`: The learning rate
+- `Q::Array{Float64,2}`: The Q-array
+- `my_π::Array{Int64,1}`: The policy
+
+"""
 mutable struct MySARSAAgentModel <: AbstractLearningModel
 
     # data -

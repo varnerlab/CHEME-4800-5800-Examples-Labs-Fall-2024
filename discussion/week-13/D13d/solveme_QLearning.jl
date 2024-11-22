@@ -25,6 +25,9 @@ my_Q_dictionary = let
     my_Q_dictionary
 end;
 
-Q = my_Q_dictionary[startstate];
-my_π = policy(Q);
+QQL = my_Q_dictionary[startstate];
+my_π = policy(QQL);
+
+# dump the policy, and Q to disk -
+save("QQL.jld2", Dict("QQL" => QQL, "policy" => my_π));
 # -- STEP 2: Solve the problem ABOVE ------------------------------------------------------------------------------------ #

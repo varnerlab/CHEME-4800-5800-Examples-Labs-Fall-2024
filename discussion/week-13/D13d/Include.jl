@@ -20,6 +20,8 @@ using Distributions
 using Plots
 using Colors
 using StatsPlots
+using JLD2
+using FileIO
 
 # load my codes -
 include(joinpath(_PATH_TO_SRC, "Types.jl"))

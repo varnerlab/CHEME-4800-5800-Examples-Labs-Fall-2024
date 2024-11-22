@@ -12,8 +12,9 @@ number_of_actions = 4; # number of actions (move around the grid)
 𝒜 = range(1,stop=number_of_actions,step=1) |> collect;
 
 # parameters associated with the utility function -
-α = [0.55, 0.45]; # coefficients
-c = [0.98, 1.49]; # price of x1 and x2
+α = [0.30, 0.70]; # coefficients
+c = [0.98, 1.79]; # price of x1 and x2
+# c = [0.01, 0.01]; # price of x1 and x2
 total_budget = 50.0; # we can only spend this much
 budget_penalty = -10000.0; # penalty for going over budget
 

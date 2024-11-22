@@ -77,7 +77,7 @@ function _update(model::MySARSAAgentModel, data::NamedTuple)::MySARSAAgentModel
     Q[s,a] += α*(r+γ*Q[s′,a′] - Q[s,a])
 
     # update the policy -
-    model.my_π = policy(Q);
+    model.Q = Q;
 
     # return -
     return model;
@@ -131,18 +131,8 @@ function simulate(agent::MyQLearningAgentModel, environment::MyRectangularGridWo
             a = argmax(Q[s,:]);
         end
 
-        # check the action -
-        s′, r = nothing, nothing;
-        current_position = environment.coordinates[s];
-        new_position = current_position .+ environment.moves[a]
-        if (haskey(environment.states, new_position) == true)
-
-            # ask the world, what is my next state and reward from this (s,a)
-            s′,r = environment(s,a)
-        else
-            s′ = s;
-            r = -1000000000000.0;
-        end
+        # ask the world, what is my next state and reward from this (s,a)
+        s′,r = environment(s,a)
         
         # update my model -
         agent = agent((
@@ -180,8 +170,22 @@ function simulate(agent::MySARSAAgentModel, environment::MyRectangularGridWorldM
     # initialize -
     actions = agent.actions;
     number_of_actions = length(actions);
-    
+    visited_states = Set{Int64}();
 
+    # precompute categorical distribution -
+    exploration_dictionary = Dict{Int64,Categorical}();
+    for a ∈ 1:number_of_actions
+        θ = Array{Float64,1}(undef,number_of_actions)
+        for i ∈ 1:number_of_actions
+            if (a == i)
+                θ[i] = 1 - ϵ + ϵ/number_of_actions;
+            else
+                θ[i] = ϵ/number_of_actions;
+            end
+        end
+        exploration_dictionary[a] = Categorical(θ);
+    end
+    
     # simulation loop -
     s = environment.states[startstate];
     a = agent.my_π[s]; # get the action from the policy at this epsiode 
@@ -190,17 +194,15 @@ function simulate(agent::MySARSAAgentModel, environment::MyRectangularGridWorldM
         # implement the action -
         s′,r = environment(s,a) # what is the response from the world for doing (s,a)?
 
-        # choose the next action -
-        a′ = nothing;
-        if rand() < ϵ
-            a′ = rand(1:number_of_actions); # we generate a random next action
+        # if we visited s′ - big penalty
+        if (in(s′,visited_states) == false)
+            push!(visited_states,s′); # ok, we visited this state
         else
-
-            # ok: so we are in some state s′, let's use our memory to suggest a next action a′
-            Q = agent.Q;
-            a′ = argmax(Q[s′,:]);
+            r = -100.0; # dont revisit the same state!
         end
 
+        a′ = agent.my_π[s′] |> i-> exploration_dictionary[i] |> rand # best guess of action from policy
+            
         # update my model -
         agent = agent((
             s = s, a = a, r = r, s′ = s′, a′ = a′
