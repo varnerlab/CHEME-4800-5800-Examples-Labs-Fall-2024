@@ -1,54 +1,22 @@
-function _build(modeltype::Type{T}, data::NamedTuple)::T where T <: AbstractPolygonEndpointModel
-   
-    # build an empty model
-    model = modeltype();
-
-    # if we have options, add them to the contract model -
-    if (isempty(data) == false)
-        for key ∈ fieldnames(modeltype)
-            
-            # check the for the key - if we have it, then grab this value
-            value = nothing
-            if (haskey(data, key) == true)
-                value = data[key] # get the value
-            end
-
-            # set -
-            setproperty!(model, key, value)
-        end
-    end
- 
-    # return -
-    return model   
-end
-
-# -- PUBLIC FUNCTIONS BELOW THIS LINE -------------------------------------------------------------------- #
-build(model::Type{T}, data::NamedTuple) where T <: AbstractPolygonEndpointModel = _build(model, data);
 
 
+
+# --- PUBLIC METHODS BELOW HERE -------------------------------------------------------------------------------- #
 """
-    buildurl(base::String, model::MyPolygonStocksAggregatesEndpointModel; 
-        apiversion::Int64 = 2) -> String
+    build(base::String, model::MyWeatherGridPointEndpointModel) -> String
+
+This function is used to build a URL string that can be used to make a HTTP GET call to the National Weather Service API.
+It takes two arguments, a base URL string, and a model of type `MyWeatherGridPointEndpointModel`. 
 """
-function build(base::String, model::MyPolygonStocksAggregatesEndpointModel; 
-    apiversion::Int64 = 2)::String
+function build(base::String, model::MyWeatherGridPointEndpointModel)::String
+    
+    # TODO: implement this function, and remove the throw statement
+    # throw(ArgumentError("build(base::String, model::MyWeatherGridPointEndpointModel) not implemented yet!"));
 
-    # get data from the model to build the url -
-    apikeuy = model.apikey;
-    stocksTicker = model.stocksTicker;
-    multiplier = model.multiplier;
-    timespan = model.timespan;
-    from = model.from;
-    to = model.to;
-    adjusted = model.adjusted;
-    sort = model.sort;
-    limit = model.limit;
+    # build the URL string -
+    url_string = "$(base)/points/$(model.latitude),$(model.longitude)";
 
-    # build the base url -
-    url_string = "$(base)/v$(apiversion)/aggs/ticker/$(stocksTicker)/range/$(multiplier)/$(timespan)/$(from)/$(to)?adjusted=$(adjusted)&sort=$(sort)&limit=$(limit)&apiKey=$(apikeuy)"
-
-    # return -
+    # return the URL string -
     return url_string;
 end
-
-# -- PUBLIC FUNCTIONS ABOVE THIS LINE -------------------------------------------------------------------- #
+# --- PUBLIC METHODS ABOVE HERE -------------------------------------------------------------------------------- #

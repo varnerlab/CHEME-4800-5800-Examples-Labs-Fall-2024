@@ -1,21 +1,16 @@
-abstract type AbstractPolygonEndpointModel end
+abstract type AbstractWeatherEndpointModel end
 
-# Each endpoint model will be a struct that will contain the parameters that are required 
-# to make the request to the Polygon API.
-mutable struct MyPolygonStocksAggregatesEndpointModel <: AbstractPolygonEndpointModel
+mutable struct MyWeatherGridPointEndpointModel <: AbstractWeatherEndpointModel
 
     # data -
-    # see: https://polygon.io/docs/stocks
-    apikey::String
-    stocksTicker::String
-    multiplier::Int
-    timespan::String
-    from::Date
-    to::Date
-    adjusted::Bool
-    sort::String
-    limit::Int
+    latitude::Float64
+    longitude::Float64
+  
+    # methods -
+    MyWeatherGridPointEndpointModel(; 
+        latitude::Float64 = 0.0, longitude::Float64 = 0.0) = new(latitude, longitude);
+end
 
-    # constructor -
-    MyPolygonStocksAggregatesEndpointModel() = new();
+mutable struct MyWeatherForecastEndpointModel <: AbstractWeatherEndpointModel
+    MyWeatherForecastEndpointModel() = new(); # empty
 end
