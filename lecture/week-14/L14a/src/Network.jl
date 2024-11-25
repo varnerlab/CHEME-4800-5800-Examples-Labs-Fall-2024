@@ -1,4 +1,7 @@
 # --- PRIVATE METHODS BELOW HERE ------------------------------------------------------------------------------- #
+# This function makes a HTTP GET call with the URL that was passed in.
+# We check for a non 200 status code, and throw an exception if we get one.
+# Otherwise, we return the body of the response as a String
 function _http_get_call_with_url(url::String)::String
 
     # should we check if this string is formatted as a URL?
@@ -17,6 +20,8 @@ function _http_get_call_with_url(url::String)::String
     return response.body |> String;
 end
 
+# This function calls the HTTP GET call, and then processes the response.
+# We use a default handler, but you can pass in your own if you want to process the response differently.
 function _api(model::Type{T}, complete_url_string::String;
     handler::Function = _default_handler_process_weather_response) where T <: AbstractWeatherEndpointModel
 
