@@ -22,6 +22,9 @@ using OneHotArrays
 using Statistics
 using JLD2
 using LinearAlgebra
+using Plots
+using Colors
+using Distances
 
 # load my codes -
 include(joinpath(_PATH_TO_SRC, "Types.jl"));
